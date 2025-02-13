@@ -2,7 +2,7 @@
 <template>
   <div class="flex h-screen">
     <!-- Menú lateral -->
-    <aside class="bg-primary-500 text-white w-64 p-4 flex flex-col">
+    <aside class="bg-primary text-white w-64 p-4 flex flex-col">
       <!-- Nombre del banco -->
       <div class="text-xl font-bold mb-6">
         <NuxtLink to="/" class="text-white">Banco Saint Patrick</NuxtLink>
@@ -12,27 +12,27 @@
       <nav class="flex-1">
         <ul class="space-y-2">
           <li>
-            <NuxtLink to="/dashboard" class="block py-2 px-4 hover:bg-primary-600 rounded">
+            <NuxtLink to="/dashboard" class="block py-2 px-4 hover:bg-secondary rounded">
               Dashboard
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/transfers" class="block py-2 px-4 hover:bg-primary-600 rounded">
+            <NuxtLink to="/transfers" class="block py-2 px-4 hover:bg-secondary rounded">
               Transferencias
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/transactions" class="block py-2 px-4 hover:bg-primary-600 rounded">
+            <NuxtLink to="/transactions" class="block py-2 px-4 hover:bg-secondary rounded">
               Transacciones
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/accounts" class="block py-2 px-4 hover:bg-primary-600 rounded">
+            <NuxtLink to="/accounts" class="block py-2 px-4 hover:bg-secondary rounded">
               Cuentas y Tarjetas
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/investments" class="block py-2 px-4 hover:bg-primary-600 rounded">
+            <NuxtLink to="/investments" class="block py-2 px-4 hover:bg-secondary rounded">
               Inversiones
             </NuxtLink>
           </li>
@@ -43,12 +43,12 @@
       <div class="mt-auto">
         <ul class="space-y-2">
           <li>
-            <NuxtLink to="/settings" class="block py-2 px-4 hover:bg-primary-600 rounded">
+            <NuxtLink to="/settings" class="block py-2 px-4 hover:bg-secondary rounded">
               Settings
             </NuxtLink>
           </li>
           <li>
-            <button @click="logout" class="block w-full text-left py-2 px-4 hover:bg-primary-600 rounded">
+            <button @click="logout" class="block w-full text-left py-2 px-4 hover:bg-secondary rounded">
               Logout
             </button>
           </li>
@@ -75,6 +75,6 @@ const logout = () => {
 <style scoped>
 /* Estilos personalizados */
 .router-link-active {
-  background-color: #1e40af; /* Cambia el color de fondo para la ruta activa */
+  background-color: #D9B249; /* Cambia el color de fondo para la ruta activa */
 }
 </style>
