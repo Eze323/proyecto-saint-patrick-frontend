@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     configPath: '~/tailwind.config.ts', // Ruta del archivo de configuración
     cssPath: '~/assets/styles/global.css' // Estilos globales de Tailwind
   },
+  
   plugins:[
     // '~/plugins/toast.ts'
   ]
