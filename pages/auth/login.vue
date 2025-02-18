@@ -36,7 +36,7 @@ const handleLogin = async (credentials: Credentials) => {
 
   try {
     const success = await login(credentials);
-
+    console.log('success', success);
     if (success) {
       console.log('¡Inicio de sesión exitoso!');
       navigateTo('/dashboard'); // Usa router.push para la redirección en Nuxt 3

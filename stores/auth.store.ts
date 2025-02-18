@@ -1,4 +1,7 @@
+//auth.store.ts
+
 import { defineStore } from 'pinia';
+import type { UserProfile } from '~/utils/types'; // Importa el tipo UserProfile
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -36,12 +39,24 @@ export const useAuthStore = defineStore('auth', {
     async fetchUser() {
       if (this.token) {
         // Simulación de obtención de datos del usuario
-        const user = {
-          name: 'Juan Pérez',
-          email: 'juan.perez@example.com',
-          balance: 1000, // Ejemplo de saldo
-        };
-        this.setUser(user); // Usamos setUser para actualizar el store
+        // const user = {
+        //   name: 'Juan Pérez',
+        //   email: 'juan.perez@example.com',
+        //   balance: 1000, // Ejemplo de saldo
+        // };
+        
+        try {
+          const user = await $fetch<UserProfile>('/api/user', { // Tipa la respuesta de $fetch
+            headers: {
+              Authorization: `Bearer ${this.token}`, // Incluye el token en la cabecera
+            },
+          });
+          this.setUser(user);
+        } catch (error) {
+          console.error("Error fetching user:", error);
+          this.clearToken(); // Si hay un error, limpia el token y el usuario
+          navigateTo('/auth/login'); // Redirige al login (opcional)
+        }
       }
     },
   },
