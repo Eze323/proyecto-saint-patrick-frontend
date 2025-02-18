@@ -3,10 +3,16 @@ const users = [
     cardNumber: '4546-8574-1856-5565',
     pin: '4345',
     profile: {
-      name: 'Johan Sebastian Mastropiero',
+      name: 'Johan Sebastian',
+      lastname: 'Mastropiero',
       email: 'usuario1@example.com',
       address: 'Avenida Siempre Vivas 123',
       phone: '+54 11 1234-5678',
+      zip: '1603',
+      locality: 'Monte Grande',
+      province: 'Buenos Aires',
+      country: 'Argentina',
+
     },
     balance: 40555,
     accounts: [

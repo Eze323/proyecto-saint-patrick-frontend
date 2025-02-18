@@ -15,6 +15,7 @@ export default defineNuxtConfig({
   
   plugins:[
     // '~/plugins/toast.ts'
+    
   ],
   build:{
     transpile:[
