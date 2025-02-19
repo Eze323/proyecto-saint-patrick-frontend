@@ -15,7 +15,14 @@ export default defineNuxtConfig({
   
   plugins:[
     // '~/plugins/toast.ts'
-  ]
+    
+  ],
+  build:{
+    transpile:[
+      '@headlessui/vue',
+      '@heroicons/vue'
+    ]
+  }
 
   
 })
