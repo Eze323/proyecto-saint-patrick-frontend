@@ -35,7 +35,7 @@
   
     <div class="container mx-auto max-w-4xl p-4 bg-white shadow-md rounded-lg">
       <div class="flex items-center gap-4 mb-4">
-        <img src="./profile-form.png" alt="Foto de perfil" class="w-12 h-12 object-cover" />
+        <img src="@/assets/images/profile-form.png" alt="Foto de perfil" class="w-12 h-12 object-cover" />
         <button class="text-[#00595c] font-semibold text-sm hover:underline">Cambiar foto</button>
       </div>
   
