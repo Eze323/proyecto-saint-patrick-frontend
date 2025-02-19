@@ -3,7 +3,7 @@
       <div class="flex items-center gap-3">
         <div class="text-xl cursor-pointer text-blue-500">🔔</div>
         <div class="flex items-center gap-2">
-          <img src="./profile-form.png" alt="Foto de perfil" class="w-8 h-8 rounded-full" />
+          <img src="@/assets/images/profile-form.png" alt="Foto de perfil" class="w-8 h-8 rounded-full" />
           <div class="flex flex-col">
             <span class="text-sm font-semibold">Juan Perez</span>
           </div>
