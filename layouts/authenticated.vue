@@ -68,7 +68,7 @@
           </li>
           <li>
             <button @click="logout" class="flex items-center w-full text-left py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors">
-              <ArrowLeftOnRectangleIcon class="w-5 h-5 mr-2" />
+              <ArrowLeftEndOnRectangleIcon class="w-5 h-5 mr-2" />
               Cerrar Sesión
             </button>
           </li>
@@ -121,7 +121,7 @@ import {
   ChartBarIcon,
   LifebuoyIcon,
   ShieldCheckIcon,
-  ArrowLeftOnRectangleIcon,
+  ArrowLeftEndOnRectangleIcon,
   EllipsisHorizontalIcon,
   Bars3Icon,
   XMarkIcon,
