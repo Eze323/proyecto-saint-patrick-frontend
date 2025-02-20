@@ -1,42 +1,43 @@
 import { useAuthStore } from '@/stores/auth.store';
-import type { LoginResponse,Credentials  } from '~/utils/types';
+import type { Credentials, LoginResponse } from '~/utils/types';
 
 export const useAuth = () => {
   const authStore = useAuthStore();
 
+  /**
+   * Inicia sesión con las credenciales proporcionadas.
+   * @param credentials - Objeto con el número de tarjeta y el PIN.
+   */
   const login = async (credentials: Credentials) => {
     try {
+      // Realiza la solicitud al endpoint de login
       const response = await $fetch<LoginResponse>('/api/auth/login', {
         method: 'POST',
         body: credentials,
       });
 
+      // Almacena el token y los datos del usuario en el store
       authStore.setToken(response.token);
       authStore.setUser(response.user);
 
+      // Redirige al dashboard después del login exitoso
       navigateTo('/dashboard');
-      return true;
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error durante el inicio de sesión:', error);
 
-      if (error.response && error.response.status === 401) {
-        console.log('Credenciales incorrectas (401)');
-        throw new Error('Credenciales inválidas');
-      } else if (error.response && error.response.status === 400) {
-        console.log('Solicitud incorrecta (400)');
-        throw new Error('Solicitud incorrecta');
-      } else if (error.message === 'Network Error') {
-        console.log('Error de red');
-        throw new Error('Error de red');
-      } else {
-        console.log('Error desconocido:', error);
-        throw new Error('Error desconocido');
-      }
+      // Muestra un mensaje de error al usuario (puedes usar un toast o un alert)
+      alert('Credenciales inválidas. Por favor, inténtalo de nuevo.');
     }
   };
 
-  const logout = async () => {
+  /**
+   * Cierra la sesión del usuario.
+   */
+  const logout = () => {
+    // Limpia el token y los datos del usuario en el store
     authStore.clearToken();
+
+    // Redirige al usuario a la página de login
     navigateTo('/auth/login');
   };
 

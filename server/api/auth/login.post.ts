@@ -5,7 +5,7 @@ const users = [
     profile: {
       name: 'Johan Sebastian',
       lastname: 'Mastropiero',
-      email: 'usuario1@example.com',
+      email: 'johanSebastian@mastropiero.com',
       address: 'Avenida Siempre Vivas 123',
       phone: '+54 11 1234-5678',
       zip: '1603',
@@ -14,12 +14,12 @@ const users = [
       country: 'Argentina',
 
     },
-    balance: 40555,
+    balance: 30678,
     accounts: [
       {
         accountNumber: '123456789',
         type: 'Cuenta Corriente',
-        balance: 20000,
+        balance: 35621,
       },
       {
         accountNumber: '987654321',

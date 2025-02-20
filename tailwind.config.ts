@@ -13,7 +13,7 @@ export default {
       colors: {
         // Combinación de colores elegante y sofisticada
         primary: {
-          DEFAULT: '#00595C',   //#005858 //#669B9A
+          DEFAULT: '#488586',   //#005858 //#669B9A
           50: '#E0F2F7', // Un tono más claro (opcional)
           100: '#B2DFDB', // Otro tono más claro (opcional)
           200: '#80CBC4', // Otro tono más claro (opcional)
