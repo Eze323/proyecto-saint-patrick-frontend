@@ -1,3 +1,5 @@
+//utils/types.d.ts
+
 export interface Account {
     accountNumber: string;
     type: string;
