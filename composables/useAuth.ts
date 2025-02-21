@@ -22,6 +22,7 @@ export const useAuth = () => {
 
       // Redirige al dashboard después del login exitoso
       navigateTo('/dashboard');
+      return true;
     } catch (error) {
       console.error('Error durante el inicio de sesión:', error);
 
@@ -29,7 +30,25 @@ export const useAuth = () => {
       alert('Credenciales inválidas. Por favor, inténtalo de nuevo.');
     }
   };
+  const register = async (credentials: Credentials) => {
+    // Lógica de registro
+    try {
+      // Simula una llamada a la API
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        body: JSON.stringify(credentials),
+      });
 
+      if (!response.ok) {
+        throw new Error('Error durante el registro');
+      }
+
+      return true; // Registro exitoso
+    } catch (error) {
+      console.error('Error en el registro:', error);
+      throw error;
+    }
+  };
   /**
    * Cierra la sesión del usuario.
    */
@@ -43,6 +62,7 @@ export const useAuth = () => {
 
   return {
     login,
+    register,
     logout,
   };
 };

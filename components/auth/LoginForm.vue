@@ -1,8 +1,8 @@
 <!-- components/auth/LoginForm.vue -->
 <template>
-  <form @submit.prevent="handleSubmit">
-    <div class="mb-4">
-      <label for="cardNumber" class="block text-xl font-medium text-primary">Número de Tarjeta</label>
+  <form @submit.prevent="handleSubmit" class="">
+    <div class="mb-4 space-y-2">
+      <label for="cardNumber" class="block text-sm font-medium text-primary">Número de Tarjeta</label>
       <input
         v-model="cardNumber"
         type="text"
@@ -13,7 +13,7 @@
       />
     </div>
     <div class="mb-4">
-      <label for="pin" class="block text-xl font-medium text-primary">Clave</label>
+      <label for="pin" class="block text-sm font-medium text-primary">Clave</label>
       <input
         v-model="pin"
         type="password"
@@ -34,10 +34,14 @@
   <span v-if="loading">Cargando...</span>
   <span v-else>Ingresar</span>
 </button>
-  </form>
+
+</form>
+
 </template>
 
 <script setup lang="ts">
+import { NuxtLink } from '#components';
+
 
 const props = defineProps({
   loading: Boolean,
