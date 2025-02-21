@@ -111,8 +111,7 @@
   </div>
 </template>
 
-<script setup>
-
+<script setup lang="ts">
 import {
   HomeIcon,
   BanknotesIcon,
@@ -123,7 +122,7 @@ import {
   LifebuoyIcon,
   ShieldCheckIcon,
   ArrowLeftEndOnRectangleIcon,
-  EllipsisHorizontalIcon,
+  // EllipsisHorizontalIcon,
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/vue/24/solid";
@@ -144,9 +143,8 @@ const logout = () => {
   const authStore = useAuthStore();
   authStore.clearToken();
   navigateTo("/auth/login");
-}
-
-</script >
+};
+</script>
 
 <style scoped>
 
