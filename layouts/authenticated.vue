@@ -14,43 +14,43 @@
       <nav class="flex-1">
         <ul class="space-y-2">
           <li>
-            <NuxtLink to="/dashboard" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors">
+            <NuxtLink to="/dashboard" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors" @click="toggleMenu">
               <HomeIcon class="w-5 h-5 mr-2" />
               Inicio
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/accounts" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors">
+            <NuxtLink to="/accounts" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors" @click="toggleMenu">
               <BanknotesIcon class="w-5 h-5 mr-2" />
               Cuentas
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/transfers" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors">
+            <NuxtLink to="/transfers" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors" @click="toggleMenu">
               <ArrowPathIcon class="w-5 h-5 mr-2" />
               Transferencias
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/payments" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors">
+            <NuxtLink to="/payments" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors" @click="toggleMenu">
               <CreditCardIcon class="w-5 h-5 mr-2" />
               Pagos
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/cards" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors">
+            <NuxtLink to="/cards" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors" @click="toggleMenu">
               <IdentificationIcon class="w-5 h-5 mr-2" />
               Tarjetas
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/investments" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors">
+            <NuxtLink to="/investments" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors" @click="toggleMenu">
               <ChartBarIcon class="w-5 h-5 mr-2" />
               Inversiones
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/support" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors">
+            <NuxtLink to="/support" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors" @click="toggleMenu">
               <LifebuoyIcon class="w-5 h-5 mr-2" />
               Soporte
             </NuxtLink>
@@ -61,7 +61,7 @@
       <div class="mt-auto">
         <ul class="space-y-2">
           <li>
-            <NuxtLink to="/security" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors">
+            <NuxtLink to="/security" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors" @click="toggleMenu">
               <ShieldCheckIcon class="w-5 h-5 mr-2" />
               Seguridad
             </NuxtLink>
@@ -111,7 +111,8 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
+
 import {
   HomeIcon,
   BanknotesIcon,
@@ -126,8 +127,7 @@ import {
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/vue/24/solid";
-import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
-import { ref } from 'vue';
+//import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 
 const isMenuOpen = ref(false);
 
@@ -135,12 +135,18 @@ const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
 };
 
+// Cerrar el menú cuando se cambia de ruta
+onBeforeRouteUpdate(() => {
+  toggleMenu();
+});
+
 const logout = () => {
   const authStore = useAuthStore();
   authStore.clearToken();
   navigateTo("/auth/login");
-};
-</script>
+}
+
+</script >
 
 <style scoped>
 
