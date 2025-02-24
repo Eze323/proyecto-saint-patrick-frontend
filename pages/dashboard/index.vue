@@ -1,7 +1,7 @@
 <template>
   <div class="p-1">
     <h1 class="text-3xl font-bold mb-2">Inicio</h1>
-    <div class="flex flex-col gap-2">  
+    <div class="flex flex-col gap-2 py-4">  
       
     <BalanceCard/>
 

@@ -16,4 +16,6 @@
   // Obtén el nombre del usuario desde el store o composable
   const authStore = useAuthStore();
   const userName = authStore.user?.profile?.name || 'Usuario';
+
+  
   </script>

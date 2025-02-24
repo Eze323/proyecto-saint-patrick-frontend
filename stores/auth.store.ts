@@ -1,3 +1,4 @@
+// Este archivo es el store de autenticación, aquí guardamos el token y el usuario
 import { defineStore } from 'pinia';
 import type { UserProfile } from '~/utils/types';
 
@@ -51,4 +52,6 @@ export const useAuthStore = defineStore('auth', {
       }
     },
   },
+  persist: true,
+  
 });
