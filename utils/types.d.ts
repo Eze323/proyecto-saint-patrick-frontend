@@ -1,12 +1,14 @@
 //utils/types.d.ts
 
 export interface Account {
-    accountNumber: string;
-    type: string;
-    balance: number;
+   enterprice: string;  
+   cbu: string;
+   type: string;
+   balance: number;
   }
   
   export interface Card {
+    
     cardNumber: string;
     type: string;
     limit: number;
@@ -16,6 +18,7 @@ export interface Account {
     id: number;
     date: string;
     amount: number;
+    recipient: string; 
     description: string;
   }
   

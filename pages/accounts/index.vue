@@ -1,7 +1,7 @@
 <template>
-  <div class="accounts-page">
-    <h1>Cuentas</h1>
-    <p>Aquí puedes gestionar tus cuentas bancarias.</p>
+  <div class="p-1">
+    <h1 class="text-3xl font-bold mb-2">Cuentas</h1>
+  
 
     <!-- Mostrar un mensaje de carga si los datos no están listos -->
     <div v-if="!user">Cargando datos del usuario...</div>
@@ -9,27 +9,30 @@
     <!-- Mostrar los datos del usuario una vez cargados -->
     <div v-else>
       <!-- Sección de información del perfil -->
-      <div class="profile-section">
+      <!-- <div class="profile-section">
         <h2>Perfil</h2>
         <p><strong>Nombre:</strong> {{ user.profile.name }}</p>
         <p><strong>Email:</strong> {{ user.profile.email }}</p>
         <p><strong>Saldo total:</strong> {{ user.balance }} USD</p>
-      </div>
+      </div> -->
 
       <!-- Sección de cuentas -->
-      <div class="accounts-section">
-        <h2>Cuentas</h2>
+      <div class="accounts-section py-4">
+        <h2 class="text-primary text-2xl">Saldos y movimientos</h2>
         <div class="account-cards">
-          <div v-for="account in user.accounts" :key="account.accountNumber" class="account-card">
-            <h3>{{ account.type }}</h3>
-            <p><strong>Número de cuenta:</strong> {{ account.accountNumber }}</p>
-            <p><strong>Saldo:</strong> {{ account.balance }} USD</p>
-          </div>
+          <CardAccount
+            v-for="account in user.accounts"
+            :key="account.cbu"
+            :enterprice="account.enterprice"
+            :cbu="account.cbu"
+            :balance="account.balance"
+            :type="account.type"
+           />
         </div>
       </div>
 
       <!-- Sección de tarjetas -->
-      <div class="cards-section">
+      <!-- <div class="cards-section">
         <h2>Tarjetas</h2>
         <div class="card-cards">
           <div v-for="card in user.cards" :key="card.cardNumber" class="card-card">
@@ -38,7 +41,7 @@
             <p><strong>Límite:</strong> {{ card.limit }} USD</p>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- Sección de transacciones -->
       <div class="transactions-section">
@@ -47,6 +50,7 @@
           <thead>
             <tr>
               <th>Fecha</th>
+              <th>Destinatario</th>
               <th>Descripción</th>
               <th>Monto</th>
             </tr>
@@ -54,6 +58,7 @@
           <tbody>
             <tr v-for="transaction in user.transactions" :key="transaction.id">
               <td>{{ transaction.date }}</td>
+              <td>{{ transaction.recipient }}</td>
               <td>{{ transaction.description }}</td>
               <td :class="{ 'negative': transaction.amount < 0, 'positive': transaction.amount >= 0 }">
                 {{ transaction.amount }} USD
@@ -94,7 +99,7 @@ definePageMeta({ layout: 'authenticated' });
 }
 
 h2 {
-  color: #333;
+ 
   border-bottom: 2px solid #eee;
   padding-bottom: 10px;
   margin-bottom: 20px;

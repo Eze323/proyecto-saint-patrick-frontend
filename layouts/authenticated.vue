@@ -1,9 +1,11 @@
 <template>
   <div class="flex h-screen">
+    <!-- Menú Lateral -->
     <aside
-      class="bg-primary-450 text-black w-64 p-4 flex flex-col transition-transform duration-300 lg:translate-x-0"
-      :class="isMenuOpen ? 'translate-x-0' : '-translate-x-full'"
+      class="bg-primary-450 text-black w-64 p-4 flex flex-col fixed lg:relative transition-transform duration-300"
+      :class="isMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'"
     >
+      <!-- Logo -->
       <div class="text-3xl mb-6">
         <NuxtLink to="/" class="text-center">
           <span class="text-primary">Saint</span>
@@ -11,10 +13,15 @@
         </NuxtLink>
       </div>
 
+      <!-- Navegación -->
       <nav class="flex-1">
         <ul class="space-y-2">
           <li>
-            <NuxtLink to="/dashboard" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors" @click="toggleMenu">
+            <NuxtLink
+              to="/dashboard"
+              class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors"
+              @click="toggleMenu"
+            >
               <HomeIcon class="w-5 h-5 mr-2" />
               Inicio
             </NuxtLink>
@@ -58,56 +65,42 @@
         </ul>
       </nav>
 
+      <!-- Enlaces Inferiores -->
       <div class="mt-auto">
         <ul class="space-y-2">
           <li>
-            <NuxtLink to="/security" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors" @click="toggleMenu">
+            <NuxtLink
+              to="/security"
+              class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors"
+              @click="toggleMenu"
+            >
               <ShieldCheckIcon class="w-5 h-5 mr-2" />
               Seguridad
             </NuxtLink>
           </li>
           <li>
-            <button @click="logout" class="flex items-center w-full text-left py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors">
+            <button
+              @click="logout"
+              class="flex items-center w-full text-left py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors"
+            >
               <ArrowLeftEndOnRectangleIcon class="w-5 h-5 mr-2" />
               Cerrar Sesión
             </button>
           </li>
-          <!-- <li>
-            <Menu as="div" class="relative">
-              <MenuButton class="flex items-center w-full text-left py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors">
-                <EllipsisHorizontalIcon class="w-5 h-5 mr-2" />
-                Más opciones
-              </MenuButton>
-              <MenuItems class="absolute bottom-full left-0 w-48 bg-white rounded-lg shadow-lg z-10">
-                <MenuItem v-slot="{ active }">
-                  <NuxtLink to="/settings" :class="[active ? 'bg-secondary text-white' : 'text-black', 'block px-4 py-2 rounded transition-colors']">
-                    Configuración
-                  </NuxtLink>
-                </MenuItem>
-                <MenuItem v-slot="{ active }">
-                  <NuxtLink to="/help" :class="[active ? 'bg-secondary text-white' : 'text-black', 'block px-4 py-2 rounded transition-colors']">
-                    Ayuda
-                  </NuxtLink>
-                </MenuItem>
-                <MenuItem v-slot="{ active }">
-                  <NuxtLink to="/feedback" :class="[active ? 'bg-secondary text-white' : 'text-black', 'block px-4 py-2 rounded transition-colors']">
-                    Enviar feedback
-                  </NuxtLink>
-                </MenuItem>
-              </MenuItems>
-            </Menu>
-          </li> -->
         </ul>
       </div>
     </aside>
 
   
 
-    <main class="flex-1 p-6 transition-all duration-300" :class="isMenuOpen ? 'ml-64' : ''">
+<!-- Contenido Principal -->
+<main class="flex-1 p-6 overflow-y-auto transition-all duration-300"">
       <!-- Header -->
       <header class="flex justify-end items-center gap-4 mb-6">
-        <!-- UserProfile y Botón de Hamburguesa -->
+        <!-- UserProfile -->
         <UserProfile />
+
+        <!-- Botón de Hamburguesa (solo en móviles) -->
         <button
           @click="toggleMenu"
           class="lg:hidden border-2 border-primary-450 text-primary-450 p-2 rounded-xl"
@@ -115,6 +108,8 @@
           <component :is="isMenuOpen ? XMarkIcon : ChevronDoubleDownIcon" class="w-6 h-6" />
         </button>
       </header>
+
+      <!-- Contenido Dinámico -->
       <slot />
     </main>
   </div>
@@ -145,11 +140,6 @@ const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
 };
 
-// Cerrar el menú cuando se cambia de ruta
-onBeforeRouteUpdate(() => {
-  toggleMenu();
-});
-
 const logout = () => {
   const authStore = useAuthStore();
   authStore.clearToken();
@@ -157,43 +147,52 @@ const logout = () => {
 };
 </script>
 
-<style scoped>
 
-/* Estilos para el menú lateral en móviles */
-@media (max-width: 1023px) { /* Ajusta el breakpoint según necesites */
-  aside {
-    position: fixed; /* Fija el menú lateral */
-    top: 0;
-    left: 0;
-    height: 100%;
-    z-index: 40; /* Asegura que el menú esté por encima del contenido principal */
-    width: 80%; /* O el ancho que desees */
-    background-color: primary-450; /* Color de fondo para el menú en móviles */
-    overflow-y: auto; /* Permite scroll si el contenido del menú es más largo que la pantalla */
-  }
+<style scoped>
+/* Contenedor principal */
+.flex.h-screen {
+  overflow: hidden; /* Evita scroll en el contenedor raíz */
 }
 
-/* Estilos para el botón de menú en móviles */
-.fixed.top-4.left-4 {
-  z-index: 50; /* Asegura que el botón esté por encima del menú */
+/* Menú lateral */
+/* Estilos para el menú lateral */
+aside {
+  height: 100vh; /* Altura completa */
+  z-index: 40; /* Por encima del contenido */
+  overflow-y: auto; /* Scroll interno si el contenido excede */
 }
 
 /* Estilos para el contenido principal */
 main {
-  /* Estilos para el contenido principal en general */
-  transition: margin-left 0.3s ease; /* Transición para el margen izquierdo */
+  flex: 1; /* Ocupa el espacio restante */
+  height: 100vh; /* Altura completa */
+  overflow-y: auto; /* Permite scroll vertical */
+  transition: margin-left 0.3s ease; /* Transición suave */
 }
 
+/* Estilos para móviles */
 @media (max-width: 1023px) {
-  main {
-    margin-left: 0; /* Restablece el margen izquierdo en móviles */
+  aside {
+    transform: translateX(-100%); /* Oculto por defecto */
+  }
+  aside.translate-x-0 {
+    transform: translateX(0); /* Visible cuando isMenuOpen es true */
   }
 }
-/* Estilos personalizados */
+
+/* Estilos para enlaces activos */
 .router-link-active {
   border-left: 3px solid #d9b249;
   color: #d9b249;
   font-weight: 600;
   border-radius: 6px;
+}
+
+/* Ajustes para el header dentro de main */
+header {
+  position: sticky; /* Fija el header en la parte superior del main */
+  
+  background: inherit; /* Hereda el fondo del main */
+  z-index: 10;
 }
 </style>
