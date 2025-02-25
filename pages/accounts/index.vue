@@ -1,66 +1,55 @@
 <template>
-  <div class="accounts-page">
-    <h1>Cuentas</h1>
-    <p>Aquí puedes gestionar tus cuentas bancarias.</p>
+  <div class="p-4">
+    <h1 class="text-2xl lg:text-3xl font-bold mb-4">Cuentas</h1>
 
     <!-- Mostrar un mensaje de carga si los datos no están listos -->
-    <div v-if="!user">Cargando datos del usuario...</div>
+    <div v-if="!user" class="text-center py-4">Cargando datos del usuario...</div>
 
     <!-- Mostrar los datos del usuario una vez cargados -->
     <div v-else>
-      <!-- Sección de información del perfil -->
-      <div class="profile-section">
-        <h2>Perfil</h2>
-        <p><strong>Nombre:</strong> {{ user.profile.name }}</p>
-        <p><strong>Email:</strong> {{ user.profile.email }}</p>
-        <p><strong>Saldo total:</strong> {{ user.balance }} USD</p>
-      </div>
-
       <!-- Sección de cuentas -->
-      <div class="accounts-section">
-        <h2>Cuentas</h2>
-        <div class="account-cards">
-          <div v-for="account in user.accounts" :key="account.accountNumber" class="account-card">
-            <h3>{{ account.type }}</h3>
-            <p><strong>Número de cuenta:</strong> {{ account.accountNumber }}</p>
-            <p><strong>Saldo:</strong> {{ account.balance }} USD</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Sección de tarjetas -->
-      <div class="cards-section">
-        <h2>Tarjetas</h2>
-        <div class="card-cards">
-          <div v-for="card in user.cards" :key="card.cardNumber" class="card-card">
-            <h3>Tarjeta de {{ card.type }}</h3>
-            <p><strong>Número de tarjeta:</strong> {{ card.cardNumber }}</p>
-            <p><strong>Límite:</strong> {{ card.limit }} USD</p>
-          </div>
+      <div class="accounts-section py-4">
+        <h2 class="text-primary text-xl lg:text-2xl font-semibold mb-4">Saldos y movimientos</h2>
+        <div class="account-cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <CardAccount
+            v-for="account in user.accounts"
+            :key="account.cbu"
+            :enterprice="account.enterprice"
+            :cbu="account.cbu"
+            :balance="account.balance"
+            :type="account.type"
+          />
         </div>
       </div>
 
       <!-- Sección de transacciones -->
-      <div class="transactions-section">
-        <h2>Últimas transacciones</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Fecha</th>
-              <th>Descripción</th>
-              <th>Monto</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="transaction in user.transactions" :key="transaction.id">
-              <td>{{ transaction.date }}</td>
-              <td>{{ transaction.description }}</td>
-              <td :class="{ 'negative': transaction.amount < 0, 'positive': transaction.amount >= 0 }">
-                {{ transaction.amount }} USD
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="transactions-section py-4">
+        <h2 class="text-primary text-xl lg:text-2xl font-semibold mb-4">Últimas transacciones</h2>
+        <div class="overflow-x-auto">
+          <table class="min-w-full bg-white">
+            <thead>
+              <tr>
+                <th class="py-2 px-4 border-b">Fecha</th>
+                <th class="py-2 px-4 border-b">Destinatario</th>
+                <th class="py-2 px-4 border-b">Descripción</th>
+                <th class="py-2 px-4 border-b">Monto</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="transaction in user.transactions" :key="transaction.id" class="hover:bg-gray-50">
+                <td class="py-2 px-4 border-b">{{ transaction.date }}</td>
+                <td class="py-2 px-4 border-b">{{ transaction.recipient }}</td>
+                <td class="py-2 px-4 border-b">{{ transaction.description }}</td>
+                <td
+                  class="py-2 px-4 border-b"
+                  :class="{ 'text-red-500': transaction.amount < 0, 'text-green-500': transaction.amount >= 0 }"
+                >
+                  {{ transaction.amount }} USD
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -69,6 +58,7 @@
 <script setup lang="ts">
 import { useAuthStore } from '@/stores/auth.store';
 import { storeToRefs } from 'pinia';
+
 
 // Obtener el store de autenticación
 const authStore = useAuthStore();
@@ -80,63 +70,30 @@ definePageMeta({ layout: 'authenticated' });
 </script>
 
 <style scoped>
-.accounts-page {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.profile-section,
-.accounts-section,
-.cards-section,
-.transactions-section {
-  margin-bottom: 40px;
-}
-
-h2 {
-  color: #333;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-}
-
-.account-cards,
-.card-cards {
+/* Estilos personalizados */
+.account-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  gap: 1rem;
 }
 
-.account-card,
-.card-card {
-  background: #f9f9f9;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-table {
+.transactions-section table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
 }
 
-th,
-td {
-  padding: 12px;
+.transactions-section th,
+.transactions-section td {
+  padding: 0.75rem;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-th {
-  background-color: #f5f5f5;
+.transactions-section th {
+  background-color: #f9fafb;
+  font-weight: 600;
 }
 
-.negative {
-  color: red;
-}
-
-.positive {
-  color: green;
+.transactions-section tr:hover {
+  background-color: #f3f4f6;
 }
 </style>

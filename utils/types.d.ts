@@ -1,7 +1,8 @@
 //utils/types.d.ts
 
 export interface Account {
-    accountNumber: string;
+    enterprice: string;
+    cbu: string;
     type: string;
     balance: number;
   }
@@ -17,6 +18,7 @@ export interface Account {
     date: string;
     amount: number;
     description: string;
+    recipient: string;
   }
   
   export interface UserProfile {
@@ -27,6 +29,10 @@ export interface Account {
       email: string;
       address?: string; // Opcional
       phone?: string; // Opcional
+      zip?: string; // Opcional
+      locality?: string; // Opcional
+      province?: string; // Opcional
+      country?: string; // Opcional
     };
     balance: number;
     accounts: Account[];

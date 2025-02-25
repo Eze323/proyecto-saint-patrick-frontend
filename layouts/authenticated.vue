@@ -103,7 +103,7 @@
 
   
 
-    <main class="flex-1 p-6 transition-all duration-300" :class="isMenuOpen ? 'ml-64' : ''">
+    <main class="flex-1 p-6 transition-all duration-300">
       <!-- Header -->
       <header class="flex justify-end items-center gap-4 mb-6">
         <!-- UserProfile y Botón de Hamburguesa -->
@@ -146,9 +146,7 @@ const toggleMenu = () => {
 };
 
 // Cerrar el menú cuando se cambia de ruta
-onBeforeRouteUpdate(() => {
-  toggleMenu();
-});
+
 
 const logout = () => {
   const authStore = useAuthStore();
