@@ -100,12 +100,21 @@
         </ul>
       </div>
     </aside>
-
-    <button @click="toggleMenu" class="fixed top-4 right-6 z-50 bg-primary-450 text-white p-2 rounded-md lg:hidden">
-      <component :is="isMenuOpen ? XMarkIcon : Bars3Icon" class="w-6 h-6" />
-    </button>
-
-    <main class="flex-1 p-6 transition-all duration-300" :class="isMenuOpen ? 'ml-64' : ''">
+    
+    
+    <main class="flex-1 p-6 transition-all duration-300">
+      <header class="flex justify-end items-center gap-4 mb-6">
+          <!-- UserProfile -->
+          <UserProfile />
+  
+          <!-- Botón de Hamburguesa (solo en móviles) -->
+          <button
+            @click="toggleMenu"
+            class="lg:hidden border-2 border-primary-450 text-primary-450 p-2 rounded-xl"
+          >
+            <component :is="isMenuOpen ? XMarkIcon : ChevronDoubleDownIcon" class="w-6 h-6" />
+          </button>
+        </header>
       <slot />
     </main>
   </div>
@@ -122,6 +131,7 @@ import {
   LifebuoyIcon,
   ShieldCheckIcon,
   ArrowLeftEndOnRectangleIcon,
+  ChevronDoubleDownIcon,
   // EllipsisHorizontalIcon,
   Bars3Icon,
   XMarkIcon,
