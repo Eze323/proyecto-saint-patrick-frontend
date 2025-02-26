@@ -101,20 +101,11 @@
       </div>
     </aside>
 
-  
+    <button @click="toggleMenu" class="fixed top-4 right-6 z-50 bg-primary-450 text-white p-2 rounded-md lg:hidden">
+      <component :is="isMenuOpen ? XMarkIcon : Bars3Icon" class="w-6 h-6" />
+    </button>
 
     <main class="flex-1 p-6 transition-all duration-300" :class="isMenuOpen ? 'ml-64' : ''">
-      <!-- Header -->
-      <header class="flex justify-end items-center gap-4 mb-6">
-        <!-- UserProfile y Botón de Hamburguesa -->
-        <UserProfile />
-        <button
-          @click="toggleMenu"
-          class="lg:hidden border-2 border-primary-450 text-primary-450 p-2 rounded-xl"
-        >
-          <component :is="isMenuOpen ? XMarkIcon : ChevronDoubleDownIcon" class="w-6 h-6" />
-        </button>
-      </header>
       <slot />
     </main>
   </div>
@@ -132,12 +123,10 @@ import {
   ShieldCheckIcon,
   ArrowLeftEndOnRectangleIcon,
   // EllipsisHorizontalIcon,
-  ChevronDoubleDownIcon,
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/vue/24/solid";
 //import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
-import UserProfile from "~/components/UserProfile.vue";
 
 const isMenuOpen = ref(false);
 
