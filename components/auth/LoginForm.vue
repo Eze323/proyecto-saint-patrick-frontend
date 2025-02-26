@@ -7,7 +7,6 @@
         v-model="cardNumber"
         type="text"
         id="cardNumber"
-        required
          placeholder="1234-5678-9012-3456"
         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-secondary-500 focus:border-secondary-500"
         
@@ -19,7 +18,6 @@
         v-model="pin"
         type="password"
         id="pin"
-        required
         placeholder="* * * *"
         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none border-2 focus:ring-secondary-500 focus:border-secondary-500"
       
