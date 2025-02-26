@@ -59,7 +59,6 @@
 import { useAuthStore } from '@/stores/auth.store';
 import { storeToRefs } from 'pinia';
 
-
 // Obtener el store de autenticación
 const authStore = useAuthStore();
 

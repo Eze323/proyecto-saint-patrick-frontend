@@ -5,7 +5,6 @@ export interface Account {
    cbu: string;
    type: string;
    balance: number;
-
   }
   
   export interface Card {
@@ -21,7 +20,6 @@ export interface Account {
     amount: number;
     recipient: string; 
     description: string;
-    recipient: string;
   }
   
   export interface UserProfile {
@@ -32,10 +30,6 @@ export interface Account {
       email: string;
       address?: string; // Opcional
       phone?: string; // Opcional
-      zip?: string; // Opcional
-      locality?: string; // Opcional
-      province?: string; // Opcional
-      country?: string; // Opcional
     };
     balance: number;
     accounts: Account[];
