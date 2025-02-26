@@ -4,12 +4,18 @@
       class="bg-primary-450 text-black w-64 p-4 flex flex-col transition-transform duration-300 lg:translate-x-0"
       :class="isMenuOpen ? 'translate-x-0' : '-translate-x-full'"
     >
-      <div class="text-3xl mb-6">
-        <NuxtLink to="/" class="text-center">
-          <span class="text-primary">Saint</span>
-          <span class="text-white">Patrick</span>
-        </NuxtLink>
-      </div>
+    <div class="text-3xl mb-6">
+    <NuxtLink to="/" class="text-center text-white">
+      <!-- Texto "Banco" -->
+      <span class="block">Banco</span>
+
+      <!-- Texto "Saint Patrick" -->
+      <span class="block">
+        <span class="text-secondary">S</span>aint
+        <span class="text-secondary">P</span>atrick
+      </span>
+    </NuxtLink>
+    </div>
 
       <nav class="flex-1">
         <ul class="space-y-2">
@@ -144,10 +150,6 @@ const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
 };
 
-// Cerrar el menú cuando se cambia de ruta
-onBeforeRouteUpdate(() => {
-  toggleMenu();
-});
 
 const logout = () => {
   const authStore = useAuthStore();
