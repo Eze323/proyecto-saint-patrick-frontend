@@ -9,5 +9,15 @@
     </div>
 </template>
 <script setup lang="ts">
-  definePageMeta({ layout: "authenticated" });
+
+import TransferForm from '~/components/TransferForm.vue';
+
+
+
+
+
+  definePageMeta({ 
+    layout: "authenticated",
+    //ssr: false, // Opcional: Desactiva SSR para esta página
+  });
 </script>

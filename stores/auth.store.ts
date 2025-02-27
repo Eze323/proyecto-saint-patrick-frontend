@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import type { UserProfile } from '~/utils/types';
 
 export const useAuthStore = defineStore('auth', {
@@ -50,5 +51,8 @@ export const useAuthStore = defineStore('auth', {
         }
       }
     },
+  },
+  persist: {
+    storage: import.meta.client ? localStorage : undefined, // Solo usa localStorage en el cliente
   },
 });

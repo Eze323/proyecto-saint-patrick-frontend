@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   modules: [
             '@nuxtjs/tailwindcss',
             '@pinia/nuxt',
+            'pinia-plugin-persistedstate/nuxt',
             // '@nuxt/ui'
           ],
    // Configuración de Tailwind
@@ -22,7 +23,15 @@ export default defineNuxtConfig({
       '@headlessui/vue',
       '@heroicons/vue'
     ]
-  }
-
+  },
+  // Configuración de Pinia persisted
+  piniaPluginPersistedstate: {
+    storage: 'cookies',
+    cookieOptions: {
+      sameSite: 'lax',
+    },
+    debug: true,
+  },
+ssr: false,
   
 })
