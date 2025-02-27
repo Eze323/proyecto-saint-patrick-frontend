@@ -1,7 +1,7 @@
 <template>
   <div class="h-screen flex flex-col md:flex-row">  <div class="w-full md:w-1/2 bg-primary-400 flex flex-col items-center justify-center p-8 text-white">
       <img
-        src="assets/images/Cartel.png"
+        src="assets/images/Cartel.webp"
         alt="Logo del Banco"
         class="w-32 mb-6 md:w-48 lg:w-96 shadow-lg transition-transform duration-300 border-2 border-primary-700 hover:scale-105 "
       />
