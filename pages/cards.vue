@@ -14,7 +14,7 @@
       <!-- Tarjeta Débito -->
       <div class="bg-[#7bbbb0] rounded-lg shadow-md">
         <div class="p-4">
-          <div class="flex flex-row md:flex-row gap-4">
+          <div class="flex flex-col md:flex-row gap-4">
             <!-- Parte frontal de la tarjeta -->
             <div class="bg-[#4f8484] p-4 rounded-lg text-white w-full md:w-1/2">
               <img src="/MasterCard.png" alt="MasterCard" class="w-12 h-auto mb-4" />
@@ -51,7 +51,7 @@
       <!-- Tarjeta Crédito -->
       <div class="bg-[#b5b1e3] rounded-lg shadow-md">
         <div class="p-4">
-          <div class="flex flex-row md:flex-row gap-4">
+          <div class="flex flex-col md:flex-row gap-4">
             <!-- Parte frontal de la tarjeta -->
             <div class="bg-[#d6c8f7] p-4 rounded-lg text-black w-full md:w-1/2">
               <img src="/MasterCard.png" alt="MasterCard" class="w-12 h-auto mb-4" />
