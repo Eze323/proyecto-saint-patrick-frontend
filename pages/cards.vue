@@ -17,7 +17,7 @@
           <div class="flex flex-col md:flex-row gap-4">
             <!-- Parte frontal de la tarjeta -->
             <div class="bg-[#4f8484] p-4 rounded-lg text-white w-full md:w-1/2">
-              <img src="/MasterCard.png" alt="MasterCard" class="w-12 h-auto mb-4" />
+              <img src="/MasterCard.webp" alt="MasterCard" class="w-12 h-auto mb-4" />
               <h2 class="text-sm font-semibold">Saldo Disponible</h2>
               <p class="text-2xl font-bold">$ 35.621,00</p>
               <p class="text-base">4546********1478</p>
@@ -54,7 +54,7 @@
           <div class="flex flex-col md:flex-row gap-4">
             <!-- Parte frontal de la tarjeta -->
             <div class="bg-[#d6c8f7] p-4 rounded-lg text-black w-full md:w-1/2">
-              <img src="/MasterCard.png" alt="MasterCard" class="w-12 h-auto mb-4" />
+              <img src="/MasterCard.webp" alt="MasterCard" class="w-12 h-auto mb-4" />
               <h2 class="text-sm font-semibold">Último resumen</h2>
               <p class="text-2xl font-bold">$ 0,0</p>
               <p class="text-base">5611********4343</p>
@@ -91,7 +91,7 @@
       <!-- Resúmenes -->
       <div class="bg-[#5f8d8d] p-4 rounded-lg flex items-center gap-4">
         <div class="w-12 h-12 flex items-center justify-center">
-          <img src="/moneda_1.png" alt="Resúmenes" class="w-8 h-8" />
+          <img src="/moneda_1.webp" alt="Resúmenes" class="w-8 h-8" />
         </div>
         <div>
           <p class="text-xs">Chequea y descarga tus</p>
@@ -102,7 +102,7 @@
       <!-- Bloqueo de PIN -->
       <div class="bg-[#5f8d8d] p-4 rounded-lg flex items-center gap-4">
         <div class="w-12 h-12 flex items-center justify-center">
-          <img src="/moneda_2.png" alt="Bloqueo PIN" class="w-8 h-8" />
+          <img src="/moneda_2.webp" alt="Bloqueo PIN" class="w-8 h-8" />
         </div>
         <div>
           <p class="text-xs">Bloqueo y desbloqueo de</p>
@@ -113,7 +113,7 @@
       <!-- Aumentar límites -->
       <div class="bg-[#5f8d8d] p-4 rounded-lg flex items-center gap-4">
         <div class="w-12 h-12 flex items-center justify-center">
-          <img src="/moneda_3.png" alt="Aumentar límites" class="w-8 h-8" />
+          <img src="/moneda_3.webp" alt="Aumentar límites" class="w-8 h-8" />
         </div>
         <div>
           <p class="text-xs">Aumenta tus</p>

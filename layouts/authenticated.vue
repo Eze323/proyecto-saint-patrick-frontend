@@ -4,19 +4,21 @@
       class="bg-primary-450 text-black w-64 p-4 flex flex-col transition-transform duration-300 lg:translate-x-0"
       :class="isMenuOpen ? 'translate-x-0' : '-translate-x-full'"
     >
-    <div class="text-3xl mb-6">
-    <NuxtLink to="/" class="text-center text-white">
-      <!-- Texto "Banco" -->
-      <span class="block">Banco</span>
+      <!-- Contenedor del logo y texto -->
+      <div class="text-3xl mb-6 flex flex-col items-center justify-center max-w-[13rem]">
+        <NuxtLink to="/" class="text-center text-white">
+          <img src="assets/images/logo.webp" alt="Logo Saint Patrick" class="h-10 mx-auto" />
+          <!-- Texto "Banco" -->
+          <span class="block">Banco</span>
+          <!-- Texto "Saint Patrick" -->
+          <span class="block">
+            <span class="text-secondary">S</span>aint
+            <span class="text-secondary">P</span>atrick
+          </span>
+        </NuxtLink>
+      </div>
 
-      <!-- Texto "Saint Patrick" -->
-      <span class="block">
-        <span class="text-secondary">S</span>aint
-        <span class="text-secondary">P</span>atrick
-      </span>
-    </NuxtLink>
-    </div>
-
+      <!-- Menú de navegación -->
       <nav class="flex-1">
         <ul class="space-y-2">
           <li>
@@ -64,6 +66,7 @@
         </ul>
       </nav>
 
+      <!-- Menú inferior (seguridad y cerrar sesión) -->
       <div class="mt-auto">
         <ul class="space-y-2">
           <li>
@@ -78,49 +81,24 @@
               Cerrar Sesión
             </button>
           </li>
-          <!-- <li>
-            <Menu as="div" class="relative">
-              <MenuButton class="flex items-center w-full text-left py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors">
-                <EllipsisHorizontalIcon class="w-5 h-5 mr-2" />
-                Más opciones
-              </MenuButton>
-              <MenuItems class="absolute bottom-full left-0 w-48 bg-white rounded-lg shadow-lg z-10">
-                <MenuItem v-slot="{ active }">
-                  <NuxtLink to="/settings" :class="[active ? 'bg-secondary text-white' : 'text-black', 'block px-4 py-2 rounded transition-colors']">
-                    Configuración
-                  </NuxtLink>
-                </MenuItem>
-                <MenuItem v-slot="{ active }">
-                  <NuxtLink to="/help" :class="[active ? 'bg-secondary text-white' : 'text-black', 'block px-4 py-2 rounded transition-colors']">
-                    Ayuda
-                  </NuxtLink>
-                </MenuItem>
-                <MenuItem v-slot="{ active }">
-                  <NuxtLink to="/feedback" :class="[active ? 'bg-secondary text-white' : 'text-black', 'block px-4 py-2 rounded transition-colors']">
-                    Enviar feedback
-                  </NuxtLink>
-                </MenuItem>
-              </MenuItems>
-            </Menu>
-          </li> -->
         </ul>
       </div>
     </aside>
-    
-    
+
+    <!-- Contenido principal -->
     <main class="flex-1 p-6 transition-all duration-300">
       <header class="flex justify-end items-center gap-4 mb-6">
-          <!-- UserProfile -->
-          <UserProfile />
-  
-          <!-- Botón de Hamburguesa (solo en móviles) -->
-          <button
-            @click="toggleMenu"
-            class="lg:hidden border-2 border-primary-450 text-primary-450 p-2 rounded-xl"
-          >
-            <component :is="isMenuOpen ? XMarkIcon : ChevronDoubleDownIcon" class="w-6 h-6" />
-          </button>
-        </header>
+        <!-- UserProfile -->
+        <UserProfile />
+
+        <!-- Botón de Hamburguesa (solo en móviles) -->
+        <button
+          @click="toggleMenu"
+          class="lg:hidden border-2 border-primary-450 text-primary-450 p-2 rounded-xl"
+        >
+          <component :is="isMenuOpen ? XMarkIcon : ChevronDoubleDownIcon" class="w-6 h-6" />
+        </button>
+      </header>
       <slot />
     </main>
   </div>
@@ -138,18 +116,14 @@ import {
   ShieldCheckIcon,
   ArrowLeftEndOnRectangleIcon,
   ChevronDoubleDownIcon,
-  // EllipsisHorizontalIcon,
-  Bars3Icon,
   XMarkIcon,
 } from "@heroicons/vue/24/solid";
-//import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 
 const isMenuOpen = ref(false);
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
 };
-
 
 const logout = () => {
   const authStore = useAuthStore();
@@ -159,37 +133,36 @@ const logout = () => {
 </script>
 
 <style scoped>
-
 /* Estilos para el menú lateral en móviles */
-@media (max-width: 1023px) { /* Ajusta el breakpoint según necesites */
+@media (max-width: 1023px) {
   aside {
-    position: fixed; /* Fija el menú lateral */
+    position: fixed;
     top: 0;
     left: 0;
     height: 100%;
-    z-index: 40; /* Asegura que el menú esté por encima del contenido principal */
-    width: 80%; /* O el ancho que desees */
-    background-color: primary-450; /* Color de fondo para el menú en móviles */
-    overflow-y: auto; /* Permite scroll si el contenido del menú es más largo que la pantalla */
+    z-index: 40;
+    width: 80%;
+    background-color: primary-450;
+    overflow-y: auto;
   }
 }
 
 /* Estilos para el botón de menú en móviles */
 .fixed.top-4.left-4 {
-  z-index: 50; /* Asegura que el botón esté por encima del menú */
+  z-index: 50;
 }
 
 /* Estilos para el contenido principal */
 main {
-  /* Estilos para el contenido principal en general */
-  transition: margin-left 0.3s ease; /* Transición para el margen izquierdo */
+  transition: margin-left 0.3s ease;
 }
 
 @media (max-width: 1023px) {
   main {
-    margin-left: 0; /* Restablece el margen izquierdo en móviles */
+    margin-left: 0;
   }
 }
+
 /* Estilos personalizados */
 .router-link-active {
   border-left: 3px solid #d9b249;
