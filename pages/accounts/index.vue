@@ -1,11 +1,12 @@
 <template>
   <div class="p-4">
+    <!-- Título -->
     <h1 class="text-2xl lg:text-3xl font-bold mb-4">Cuentas</h1>
 
-    <!-- Mostrar un mensaje de carga si los datos no están listos -->
+    <!-- Mensaje de carga -->
     <div v-if="!user" class="text-center py-4">Cargando datos del usuario...</div>
 
-    <!-- Mostrar los datos del usuario una vez cargados -->
+    <!-- Datos del usuario -->
     <div v-else>
       <!-- Sección de cuentas -->
       <div class="accounts-section py-4">
@@ -29,19 +30,19 @@
           <table class="min-w-full bg-white">
             <thead>
               <tr>
-                <th class="py-2 px-4 border-b">Fecha</th>
-                <th class="py-2 px-4 border-b">Destinatario</th>
-                <th class="py-2 px-4 border-b">Descripción</th>
-                <th class="py-2 px-4 border-b">Monto</th>
+                <th class="py-2 px-4 border-b text-sm sm:text-base">Fecha</th>
+                <th class="py-2 px-4 border-b text-sm sm:text-base">Destinatario</th>
+                <th class="py-2 px-4 border-b text-sm sm:text-base">Descripción</th>
+                <th class="py-2 px-4 border-b text-sm sm:text-base">Monto</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="transaction in user.transactions" :key="transaction.id" class="hover:bg-gray-50">
-                <td class="py-2 px-4 border-b">{{ transaction.date }}</td>
-                <td class="py-2 px-4 border-b">{{ transaction.recipient }}</td>
-                <td class="py-2 px-4 border-b">{{ transaction.description }}</td>
+                <td class="py-2 px-4 border-b text-sm sm:text-base">{{ transaction.date }}</td>
+                <td class="py-2 px-4 border-b text-sm sm:text-base">{{ transaction.recipient }}</td>
+                <td class="py-2 px-4 border-b text-sm sm:text-base">{{ transaction.description }}</td>
                 <td
-                  class="py-2 px-4 border-b"
+                  class="py-2 px-4 border-b text-sm sm:text-base"
                   :class="{ 'text-red-500': transaction.amount < 0, 'text-green-500': transaction.amount >= 0 }"
                 >
                   {{ transaction.amount }} USD
