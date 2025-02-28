@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[#7bbbb0] rounded-lg shadow-md overflow-hidden">
+  <div class="bg-[#7bbbb0] rounded-lg shadow-xl overflow-hidden">
     <div class="p-4">
       <div class="flex flex-col md:flex-row gap-4">
         <!-- Parte frontal de la tarjeta -->

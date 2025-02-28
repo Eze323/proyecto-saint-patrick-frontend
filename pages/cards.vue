@@ -29,7 +29,7 @@
     </div>
 
     <!-- Acciones -->
-    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 ">
       <!-- Resúmenes -->
       <div class="bg-[#5f8d8d] p-4 rounded-lg flex items-center gap-4">
         <div class="w-12 h-12 flex items-center justify-center">
