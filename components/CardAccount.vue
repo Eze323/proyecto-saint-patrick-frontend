@@ -4,7 +4,7 @@
     <div class="card-header p-4 border-b border-gray-200">
       <div class="flex justify-between items-center">
         <p class="card-enterprice text-lg font-semibold text-gray-800">{{ enterprice }}</p>
-        <span class="card-type bg-yellow-200 text-yellow-800 text-sm font-medium px-2 py-1 rounded-full">{{ type }}</span>
+        <span class="card-type bg-yellow-200 text-yellow-800 text-sm font-medium px-2 py-1 rounded-full text-center">{{ type }}</span>
       </div>
     </div>
 
