@@ -8,11 +8,28 @@ export interface Account {
  }
  
  export interface Card {
-   
-   cardNumber: string;
-   type: string;
-   limit: number;
- }
+  // Información básica
+  
+  cardNumber: string; // Número de la tarjeta (puede estar enmascarado o completo)
+  type: 'Crédito' | 'Débito'; // Tipo de tarjeta
+  issuer: string; // Emisor de la tarjeta (ej: "Visa", "MasterCard")
+  holder: string; // Nombre del titular de la tarjeta
+  expiry: string; // Fecha de vencimiento (formato: "MM/YY")
+
+  // Información financiera
+  balance: number; // Saldo disponible
+  limit: number; // Límite de crédito (si es una tarjeta de crédito)
+  currency: string; // Moneda (ej: "USD", "ARS")
+
+  // Estado y seguridad
+  status: 'Activa' | 'Bloqueada' | 'Vencida'; // Estado de la tarjeta
+  isVirtual: boolean; // Indica si es una tarjeta virtual
+  cvc?: string; // Código de seguridad (opcional, puede estar enmascarado)
+
+  // Información adicional
+  createdAt?: string; // Fecha de creación (formato ISO o similar)
+  updatedAt?: string; // Fecha de última actualización (formato ISO o similar)
+}
  
  export interface Transaction {
    id: number;

@@ -6,84 +6,26 @@
       <p class="text-lg">Mis Tarjetas</p>
       <select class="bg-[#4f8484] text-white p-2 rounded-lg border-none text-base">
         <option>Seleccionar Tarjeta</option>
+        <option v-for="card in mappedCards" :key="card.cardNumber">{{ card.title }}</option>
       </select>
     </div>
 
     <!-- Grid de tarjetas -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-      <!-- Tarjeta Débito -->
-      <div class="bg-[#7bbbb0] rounded-lg shadow-md">
-        <div class="p-4">
-          <div class="flex flex-col md:flex-row gap-4">
-            <!-- Parte frontal de la tarjeta -->
-            <div class="bg-[#4f8484] p-4 rounded-lg text-white w-full md:w-1/2">
-              <img src="/MasterCard.webp" alt="MasterCard" class="w-12 h-auto mb-4" />
-              <h2 class="text-sm font-semibold">Saldo Disponible</h2>
-              <p class="text-2xl font-bold">$ 35.621,00</p>
-              <p class="text-base">4546********1478</p>
-              <p class="text-sm flex justify-between">
-                Nicolas E. Gómez <span class="text-right">12/27</span>
-              </p>
-            </div>
-
-            <!-- Parte trasera de la tarjeta -->
-            <div class="w-full md:w-1/2 p-4">
-              <h2 class="text-xl font-bold border-b-2 border-black inline-block">Tarjeta Débito</h2>
-              <p class="text-sm mt-2"><strong>Tipo:</strong> Física <span class="text-xs">⚫</span></p>
-              <p class="text-sm">Número de tarjeta</p>
-              <p class="text-base">4546-9896-2357-1478 <span class="text-xs">👁</span></p>
-              <p class="text-sm">Fecha de vencimiento</p>
-              <p class="text-sm"><strong>12/27</strong></p>
-              <p class="text-sm">CVC</p>
-              <p class="text-xs">*** <span class="text-sm">🔒</span> Token Requerido</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Botón "Ver Más" -->
-        <div class="bg-[#7bbbb0] p-4 flex justify-center">
-          <button class="bg-[#004d40] text-white px-6 py-2 rounded-lg w-full max-w-md">
-            Ver Más
-          </button>
-        </div>
-      </div>
-
-      <!-- Tarjeta Crédito -->
-      <div class="bg-[#b5b1e3] rounded-lg shadow-md">
-        <div class="p-4">
-          <div class="flex flex-col md:flex-row gap-4">
-            <!-- Parte frontal de la tarjeta -->
-            <div class="bg-[#d6c8f7] p-4 rounded-lg text-black w-full md:w-1/2">
-              <img src="/MasterCard.webp" alt="MasterCard" class="w-12 h-auto mb-4" />
-              <h2 class="text-sm font-semibold">Último resumen</h2>
-              <p class="text-2xl font-bold">$ 0,0</p>
-              <p class="text-base">5611********4343</p>
-              <p class="text-sm flex justify-between">
-                Nicolas E. Gómez <span class="text-right">12/27</span>
-              </p>
-            </div>
-
-            <!-- Parte trasera de la tarjeta -->
-            <div class="w-full md:w-1/2 p-4">
-              <h2 class="text-xl font-bold border-b-2 border-black inline-block">Tarjeta Crédito</h2>
-              <p class="text-sm mt-2"><strong>Tipo:</strong> Física <span class="text-xs">⚫</span></p>
-              <p class="text-sm">Número de tarjeta</p>
-              <p class="text-base">5611-9878-2003-4343 <span class="text-xs">👁</span></p>
-              <p class="text-sm">Fecha de vencimiento</p>
-              <p class="text-sm"><strong>12/27</strong></p>
-              <p class="text-sm">CVC</p>
-              <p class="text-xs">*** <span class="text-sm">🔒</span> Token Requerido</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Botón "Ver Más" -->
-        <div class="bg-[#b5b1e3] p-4 flex justify-center">
-          <button class="bg-[#5a54a2] text-white px-6 py-2 rounded-lg w-full max-w-md">
-            Ver Más
-          </button>
-        </div>
-      </div>
+      <CardGeneric
+        v-for="(card) in mappedCards"
+        :type="card.type"
+        :title="card.title"
+        :card-number="card.cardNumber"
+        :holder="card.holder"
+        :expiry="card.expiry"
+        :action-label="card.actionLabel"
+        :cvc="card.cvc"
+        :balance="card.balance"
+        :issuer="card.issuer"
+        :currency="card.currency"
+        :key="card.cardNumber"
+      />
     </div>
 
     <!-- Acciones -->
@@ -123,9 +65,40 @@
     </div>
   </div>
 </template>
-
 <script setup lang="ts">
+import { computed } from 'vue';
+import { useAuthStore } from '@/stores/auth.store';
+import { storeToRefs } from 'pinia';
+import CardGeneric from '@/components/CardGeneric.vue';
+
 definePageMeta({
   layout: 'authenticated', // Usa el layout para usuarios logueados
+});
+
+// Obtener el store de autenticación
+const authStore = useAuthStore();
+
+// Extraer el usuario del store manteniendo la reactividad
+const { user } = storeToRefs(authStore);
+
+// Función de mapeo para transformar las tarjetas del backend
+const mappedCards = computed(() => {
+  if (!user.value?.cards) return [];
+
+  return user.value.cards.map((card) => ({
+    
+    title: `Tarjeta ${card.type}`,
+    cardNumber: card.cardNumber,
+    holder: card.holder,
+    expiry: card.expiry,
+    balance: card.balance,
+    limit:card.limit,
+    issuer: card.issuer,
+    currency: card.currency,
+    type: card.type,
+    isVirtual: card.isVirtual,
+    cvc: card.cvc,
+    actionLabel: 'Ver Detalles',
+  }));
 });
 </script>
