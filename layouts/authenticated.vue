@@ -1,19 +1,18 @@
 <template>
   <div class="flex h-screen">
+    <!-- Menú lateral -->
     <aside
-      class="bg-primary-450 text-black w-64 p-4 flex flex-col transition-transform duration-300 lg:translate-x-0"
+      class="bg-primary-450 text-black w-64 p-4 flex flex-col transition-transform duration-300 lg:translate-x-0 fixed lg:relative z-50"
       :class="isMenuOpen ? 'translate-x-0' : '-translate-x-full'"
     >
       <!-- Contenedor del logo y texto -->
       <div class="text-3xl mb-6 flex flex-col items-center justify-center max-w-[13rem]">
-        <NuxtLink to="/" class="text-center text-white">
-          <img src="assets/images/logo.webp" alt="Logo Saint Patrick" class="h-10 mx-auto" />
-          <!-- Texto "Banco" -->
-          <span class="text-secondary">B</span>anco
-          <!-- Texto "Saint Patrick" -->
+        <NuxtLink to="/" class="text-center text-white hover:text-secondary transition-colors">
+          <img src="~/assets/images/logo.webp" alt="Logo Saint Patrick" class="h-10 mx-auto mb-2" />
+          <span class="text-secondary font-bold">B</span>anco
           <span class="block">
-            <span class="text-secondary">S</span>aint
-            <span class="text-secondary">P</span>atrick
+            <span class="text-secondary font-bold">S</span>aint
+            <span class="text-secondary font-bold">P</span>atrick
           </span>
         </NuxtLink>
       </div>
@@ -21,46 +20,14 @@
       <!-- Menú de navegación -->
       <nav class="flex-1">
         <ul class="space-y-2">
-          <li>
-            <NuxtLink to="/dashboard" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors" @click="toggleMenu">
-              <HomeIcon class="w-5 h-5 mr-2" />
-              Inicio
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/accounts" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors" @click="toggleMenu">
-              <BanknotesIcon class="w-5 h-5 mr-2" />
-              Cuentas
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/transfers" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors" @click="toggleMenu">
-              <ArrowPathIcon class="w-5 h-5 mr-2" />
-              Transferencias
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/payments" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors" @click="toggleMenu">
-              <CreditCardIcon class="w-5 h-5 mr-2" />
-              Pagos
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/cards" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors" @click="toggleMenu">
-              <IdentificationIcon class="w-5 h-5 mr-2" />
-              Tarjetas
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/investments" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors" @click="toggleMenu">
-              <ChartBarIcon class="w-5 h-5 mr-2" />
-              Inversiones
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/support" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors" @click="toggleMenu">
-              <LifebuoyIcon class="w-5 h-5 mr-2" />
-              Soporte
+          <li v-for="link in links" :key="link.to">
+            <NuxtLink
+              :to="link.to"
+              class="flex items-center py-2 px-4 hover:bg-secondary hover:text-white rounded transition-colors"
+              @click="toggleMenu"
+            >
+              <component :is="link.icon" class="w-5 h-5 mr-2" />
+              {{ link.label }}
             </NuxtLink>
           </li>
         </ul>
@@ -70,13 +37,20 @@
       <div class="mt-auto">
         <ul class="space-y-2">
           <li>
-            <NuxtLink to="/security" class="flex items-center py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors" @click="toggleMenu">
+            <NuxtLink
+              to="/security"
+              class="flex items-center py-2 px-4 hover:bg-secondary hover:text-white rounded transition-colors"
+              @click="toggleMenu"
+            >
               <ShieldCheckIcon class="w-5 h-5 mr-2" />
               Seguridad
             </NuxtLink>
           </li>
           <li>
-            <button @click="logout" class="flex items-center w-full text-left py-2 px-4 hover:bg-secondary hover:!text-white rounded transition-colors">
+            <button
+              @click="logout"
+              class="flex items-center w-full text-left py-2 px-4 hover:bg-secondary hover:text-white rounded transition-colors"
+            >
               <ArrowLeftEndOnRectangleIcon class="w-5 h-5 mr-2" />
               Cerrar Sesión
             </button>
@@ -86,7 +60,7 @@
     </aside>
 
     <!-- Contenido principal -->
-    <main class="flex-1 p-6 transition-all duration-300">
+    <main class="flex-1 p-6 transition-all duration-300 lg:ml-4">
       <header class="flex justify-end items-center gap-4 mb-6">
         <!-- UserProfile -->
         <UserProfile />
@@ -130,6 +104,17 @@ const logout = () => {
   authStore.clearToken();
   navigateTo("/auth/login");
 };
+
+// Links del menú
+const links = [
+  { to: "/dashboard", label: "Inicio", icon: HomeIcon },
+  { to: "/accounts", label: "Cuentas", icon: BanknotesIcon },
+  { to: "/transfers", label: "Transferencias", icon: ArrowPathIcon },
+  { to: "/payments", label: "Pagos", icon: CreditCardIcon },
+  { to: "/cards", label: "Tarjetas", icon: IdentificationIcon },
+  { to: "/investments", label: "Inversiones", icon: ChartBarIcon },
+  { to: "/support", label: "Soporte", icon: LifebuoyIcon },
+];
 </script>
 
 <style scoped>
@@ -140,16 +125,10 @@ const logout = () => {
     top: 0;
     left: 0;
     height: 100%;
-    z-index: 40;
     width: 80%;
-    background-color: primary-450;
+    background-color: bg-primary-450;
     overflow-y: auto;
   }
-}
-
-/* Estilos para el botón de menú en móviles */
-.fixed.top-4.left-4 {
-  z-index: 50;
 }
 
 /* Estilos para el contenido principal */
@@ -163,11 +142,25 @@ main {
   }
 }
 
-/* Estilos personalizados */
+/* Estilos para el enlace activo */
 .router-link-active {
-  border-left: 3px solid #d9b249;
-  color: #d9b249;
+  border-left: 3px solid secondary;
+  color: secondary;
   font-weight: 600;
   border-radius: 6px;
+}
+
+/* Estilos para el logo y texto del banco */
+.text-secondary {
+  color: secondary;
+}
+
+/* Estilos para el hover en enlaces */
+.hover\:bg-secondary:hover {
+  background-color: secondary;
+}
+
+.hover\:text-white:hover {
+  color: white;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4">
+  <div class="p-1">
     <!-- Título -->
     <h1 class="text-2xl lg:text-3xl font-bold mb-4">Cuentas</h1>
 

@@ -9,4 +9,30 @@
     @apply bg-primary-500 text-white px-4 py-2 rounded-md hover:bg-primary-600 transition-colors;
   } */
   
+
+}
+
+
+/* Estilos globales personalizados */
+body {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700 !important;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.5;
 }

@@ -8,7 +8,7 @@
 
     
       <h1 class="text-4xl font-bold drop-shadow-lg text-center">
-        Bienvenido al <br>
+        ¡Bienvenido a <br>
         <span class="text-yellow-500 text-4xl font-bold uppercase">S</span>aint 
         <span class="text-yellow-500 text-4xl font-bold uppercase">P</span>atrick 
         <span class="text-yellow-500 text-4xl font-bold uppercase">B</span>ank!
