@@ -18,21 +18,21 @@ const users = [
     accounts: [
       {
         enterprice: 'Saint Patrick Bank',
-        cbu: '123410356789',
+        cbu: '000005694857483903',
         type: 'Cuenta Corriente',
         balance: 35621,
       },
       {
         enterprice: 'Mercado Pago',
-        cbu: '987650432174',
+        cbu: '0000023449594943',
         type: 'Caja de Ahorro',
-        balance: 20555,
+        balance: 650000,
       },
       {
         enterprice: 'BBVA Banco Francés',
-        cbu: '682168318044',
-        type: 'Caja de Ahorro',
-        balance: 20555,
+        cbu: '000001234550433334',
+        type: 'Cuena Sueldo',
+        balance: 115895,
       },
     ],
     cards: [

@@ -9,7 +9,7 @@
         <NuxtLink to="/" class="text-center text-white">
           <img src="assets/images/logo.webp" alt="Logo Saint Patrick" class="h-10 mx-auto" />
           <!-- Texto "Banco" -->
-          <span class="block">Banco</span>
+          <span class="text-secondary">B</span>anco
           <!-- Texto "Saint Patrick" -->
           <span class="block">
             <span class="text-secondary">S</span>aint
