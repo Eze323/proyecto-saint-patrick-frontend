@@ -31,12 +31,13 @@ export default defineNuxtConfig({
             '@nuxtjs/tailwindcss',
             '@pinia/nuxt',
             'pinia-plugin-persistedstate/nuxt',
-            '@nuxtjs/google-fonts'
+            '@nuxtjs/google-fonts',
             // '@nuxt/ui'
           ],
           // Configuración de Google Fonts
   googleFonts: {
     families: {
+      'Open Sans': [300, 400, 600],
       Roboto: true, // Usar Roboto
       Montserrat: [400, 700], // Usar Montserrat con pesos 400 (regular) y 700 (bold)
     },
@@ -50,7 +51,7 @@ export default defineNuxtConfig({
   },
   
   plugins:[
-    // '~/plugins/toast.ts'
+    '~/plugins/inactivity.client.ts',
     
   ],
   build:{

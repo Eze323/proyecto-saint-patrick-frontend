@@ -75,6 +75,7 @@
       </header>
       <slot />
     </main>
+    
   </div>
 </template>
 

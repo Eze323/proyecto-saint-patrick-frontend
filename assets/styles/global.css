@@ -8,20 +8,19 @@
   /* .btn-primary {
     @apply bg-primary-500 text-white px-4 py-2 rounded-md hover:bg-primary-600 transition-colors;
   } */
-  
-
 }
 
 
 /* Estilos globales personalizados */
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans','Roboto', sans-serif;
+  font-weight: 400 !important;
   color: #333;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700 !important;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600 !important;
 }
 
 h1 {
