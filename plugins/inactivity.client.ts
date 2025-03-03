@@ -1,8 +1,6 @@
 // plugins/inactivity.client.ts
 export default defineNuxtPlugin((nuxtApp) => {
-
-  console.log('Plugin de inactividad cargado');
-
+ 
   let timeout: NodeJS.Timeout;
   let warningTimeout: NodeJS.Timeout;
 
@@ -34,15 +32,15 @@ export default defineNuxtPlugin((nuxtApp) => {
   };
 
   const resetTimer = () => {
-    console.log('Reiniciando temporizador'); // Verifica que esto aparezca en la consola al mover
+    
     clearTimeout(timeout);
     clearTimeout(warningTimeout);
 
     // Mostrar advertencia después de 10 segundos
-    warningTimeout = setTimeout(showWarning, 10 * 1000);
+    warningTimeout = setTimeout(showWarning, 10 * 1000*10);
 
     // Cerrar sesión después de 15 segundos
-    timeout = setTimeout(logout, 15 * 1000);
+    timeout = setTimeout(logout, 15 * 1000*10);
   };
 
   // Agregar event listeners para detectar actividad
