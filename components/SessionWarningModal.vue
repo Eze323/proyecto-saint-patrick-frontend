@@ -25,7 +25,7 @@
         <div class="mt-6 flex justify-center gap-4">
             <button
               @click="$emit('close')"
-              class="px-4 py-2 bg-white text-primary border-2 border-primary rounded hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+              class="px-4 py-2 bg-white text-primary border-2 border-primary rounded hover:bg-gray-300 focus:outl+-+ine-none focus:ring-2 focus:ring-primary-450"
             >
               Cerrar sesión
             </button>

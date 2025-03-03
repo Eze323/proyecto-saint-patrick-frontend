@@ -1,6 +1,7 @@
 //utils/types.d.ts
 
 export interface Account {
+  
   enterprice: string;  
   cbu: string;
   type: string;
@@ -11,7 +12,7 @@ export interface Account {
   // Información básica
   
   cardNumber: string; // Número de la tarjeta (puede estar enmascarado o completo)
-  type: 'Crédito' | 'Débito'; // Tipo de tarjeta
+  type: string; // Tipo de tarjeta  'Crédito' | 'Débito'
   issuer: string; // Emisor de la tarjeta (ej: "Visa", "MasterCard")
   holder: string; // Nombre del titular de la tarjeta
   expiry: string; // Fecha de vencimiento (formato: "MM/YY")
@@ -22,7 +23,7 @@ export interface Account {
   currency: string; // Moneda (ej: "USD", "ARS")
 
   // Estado y seguridad
-  status: 'Activa' | 'Bloqueada' | 'Vencida'; // Estado de la tarjeta
+  status: 'Activa' | 'Bloqueada' | 'Vencida' | 'Suspendida'; // Estado de la tarjeta
   isVirtual: boolean; // Indica si es una tarjeta virtual
   cvc?: string; // Código de seguridad (opcional, puede estar enmascarado)
 
@@ -40,6 +41,7 @@ export interface Account {
  }
  
  export interface UserProfile {
+    id: string;
    cardNumber: string;
    pin: string;
    profile: {
