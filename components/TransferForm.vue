@@ -30,6 +30,7 @@
               <input type="radio" v-model="transfersStore.form.destinationType" value="card" class="mr-2" />
               Número de Tarjeta
             </label>
+      
           </div>
         </div>
   
@@ -42,7 +43,11 @@
           <label for="cardNumber" class="block text-sm font-medium text-gray-700">Número de Tarjeta</label>
           <input v-model="transfersStore.form.cardNumber" type="text" id="cardNumber" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" required @blur="transfersStore.validateDestination" />
         </div>
-  
+        
+        <p v-if="transfersStore.form.recipientName" class="mt-1 text-sm text-green-600 text-center">
+          Destinatario: {{ transfersStore.form.recipientName }}
+        </p>
+          
         <div class="mb-4">
           <label for="monto" class="block text-sm font-medium text-gray-700">Monto</label>
           <input v-model.number="transfersStore.form.monto" type="number" id="monto" min="1" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" required @blur="transfersStore.validateMonto" />

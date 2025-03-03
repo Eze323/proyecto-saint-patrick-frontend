@@ -8,6 +8,7 @@ export const useTransfersStore = defineStore('transfers', {
       destinationType: 'cbuAlias' as 'cbuAlias' | 'card',
       cbuAlias: '',
       cardNumber: '',
+      recipientName: '',   // Nuevo campo para mostrar el nombre del destinatario
       monto: null as number | null,
       fecha: new Date().toLocaleDateString(),
       motivo: '',
@@ -32,19 +33,27 @@ export const useTransfersStore = defineStore('transfers', {
         const endpoint = destinationType === 'cbuAlias' ? '/api/check-user' : '/api/check-card';
         const value = destinationType === 'cbuAlias' ? cbuAlias : cardNumber;
 
-        const response = await $fetch<{ exists: boolean }>(endpoint, {
+        const response = await $fetch(endpoint, {
           method: 'POST',
           body: { [destinationType]: value },
         });
 
-        if (!response.exists) {
-          this.errorMessage = destinationType === 'cbuAlias'
-            ? 'El CBU o Alias no corresponde a un usuario registrado.'
-            : 'El número de tarjeta no es válido.';
+        if (response.exists) {
+            if ('name' in response && 'lastname' in response) {
+              this.form.recipientName = `${response.name} ${response.lastname}`; // Guardar nombre completo
+            } else {
+              this.form.recipientName = ''; // Limpiar si no existe
+            }
+          } else {
+            this.errorMessage = destinationType === 'cbuAlias'
+              ? 'El CBU o Alias no corresponde a un usuario registrado.'
+              : 'El número de tarjeta no es válido.';
+            this.form.recipientName = ''; // Limpiar si no existe
+          }
+        } catch (error) {
+          this.errorMessage = 'Error al validar el destino. Intenta de nuevo.';
+          this.form.recipientName = '';
         }
-      } catch (error) {
-        this.errorMessage = 'Error al validar el destino. Intenta de nuevo.';
-      }
     },
 
     // Validar monto disponible
@@ -159,6 +168,7 @@ export const useTransfersStore = defineStore('transfers', {
         destinationType: 'cbuAlias',
         cbuAlias: '',
         cardNumber: '',
+        recipientName: '',
         monto: null,
         fecha: new Date().toLocaleDateString(),
         motivo: '',
