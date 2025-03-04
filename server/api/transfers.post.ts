@@ -3,28 +3,28 @@ import { mockUsers } from '~/server/utils/mockBank';
 export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event);
-    console.log('Datos recibidos en /api/transfers:', body);
+    //console.log('Datos recibidos en /api/transfers:', body);
 
     const { accountId, cbuAlias, cardNumber, monto, userId } = body;
 
     if (!userId) {
-      console.log('Error: No se proporcionó userId');
+      //console.log('Error: No se proporcionó userId');
       return { success: false, message: 'Usuario no identificado' };
     }
 
     const fromUser = mockUsers.find(u => u.id === userId);
-    console.log('Usuario origen:', fromUser);
+    //console.log('Usuario origen:', fromUser);
 
     if (!fromUser) {
-      console.log('Error: Usuario no encontrado');
+      //console.log('Error: Usuario no encontrado');
       return { success: false, message: 'Usuario no encontrado' };
     }
 
     const fromAccount = fromUser.accounts.find(acc => acc.cbu === accountId);
-    console.log('Cuenta origen encontrada:', fromAccount);
+    //console.log('Cuenta origen encontrada:', fromAccount);
 
     if (!fromAccount || fromAccount.balance < monto) {
-      console.log('Fallo en cuenta origen:', { fromAccount, monto });
+      //console.log('Fallo en cuenta origen:', { fromAccount, monto });
       return { success: false, message: 'Saldo insuficiente o cuenta no encontrada.' };
     }
 
@@ -41,17 +41,17 @@ export default defineEventHandler(async (event) => {
       }
     }
 
-    console.log('Cuenta/tarjeta destino encontrada:', toAccount);
+    //console.log('Cuenta/tarjeta destino encontrada:', toAccount);
 
     if (!toAccount) {
-      console.log('Error: Destino no encontrado');
+      //console.log('Error: Destino no encontrado');
       return { success: false, message: 'Destino no encontrado.' };
     }
 
     fromAccount.balance -= monto;
     toAccount.balance += monto;
 
-    console.log('Transferencia procesada. Nuevos saldos:', { fromAccount, toAccount });
+   // console.log('Transferencia procesada. Nuevos saldos:', { fromAccount, toAccount });
 
     return { success: true };
   } catch (error) {

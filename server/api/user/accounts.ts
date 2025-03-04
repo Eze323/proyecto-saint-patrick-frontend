@@ -16,10 +16,10 @@ export default defineEventHandler(async (event) => {
         });
       }
   
-      console.log('Devolviendo cuentas para userId:', userId);
+  //    console.log('Devolviendo cuentas para userId:', userId);
       return user.accounts;
     } catch (error) {
-      console.error('Error en /api/user/accounts:', error);
+    //  console.error('Error en /api/user/accounts:', error);
       throw createError({
         statusCode: 500,
         message: 'Error interno al obtener las cuentas',

@@ -62,13 +62,13 @@ export const useTransfersStore = defineStore('transfers', {
         const authStore = useAuthStore();
         const { monto, accountId } = this.form;
       
-        console.log('Validando monto:', { monto, accountId });
-        console.log('Usuario en authStore:', authStore.user);
-        console.log('Cuentas disponibles:', authStore.user?.accounts);
+ //       console.log('Validando monto:', { monto, accountId });
+   //     console.log('Usuario en authStore:', authStore.user);
+     //   console.log('Cuentas disponibles:', authStore.user?.accounts);
       
         if (!monto || monto <= 0) {
           this.errorMessage = 'El monto debe ser mayor a 0.';
-          console.log('Error: Monto inválido');
+       //   console.log('Error: Monto inválido');
           return;
         }
       
@@ -111,15 +111,15 @@ export const useTransfersStore = defineStore('transfers', {
       
         this.isSubmitting = true;
       
-        console.log('Datos del formulario:', this.form);
-        console.log('User ID desde authStore:', authStore.user?.id || 'No disponible');
-        console.log('Usuario completo en authStore:', authStore.user);
+   //     console.log('Datos del formulario:', this.form);
+   //     console.log('User ID desde authStore:', authStore.user?.id || 'No disponible');
+   //     console.log('Usuario completo en authStore:', authStore.user);
       
         const requestBody = {
           ...this.form,
           userId: authStore.user?.id || 'unknown',
         };
-        console.log('Cuerpo completo enviado:', requestBody);
+    //    console.log('Cuerpo completo enviado:', requestBody);
       
         try {
           const response: any = await $fetch('/api/transfers', {
@@ -127,7 +127,7 @@ export const useTransfersStore = defineStore('transfers', {
             body: requestBody,
           });
       
-          console.log('Respuesta del servidor:', response);
+     //     console.log('Respuesta del servidor:', response);
       
           if (typeof response === 'string' && response.startsWith('<!DOCTYPE html')) {
             throw new Error('Respuesta inesperada del servidor (HTML en lugar de JSON)');
@@ -144,9 +144,9 @@ export const useTransfersStore = defineStore('transfers', {
                 if (authStore.user) {
                   authStore.user.accounts = updatedAccounts;
                 }
-                if (authStore.user) {
-                  console.log('Cuentas actualizadas:', authStore.user.accounts);
-                }
+                // if (authStore.user) {
+                //   console.log('Cuentas actualizadas:', authStore.user.accounts);
+                // }
               } catch (updateError) {
                 console.error('Error al actualizar cuentas:', updateError);
               }
