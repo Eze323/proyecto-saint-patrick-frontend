@@ -57,7 +57,8 @@ export default defineNuxtConfig({
   build:{
     transpile:[
       '@headlessui/vue',
-      '@heroicons/vue'
+      '@heroicons/vue',
+      
     ]
   },
   // Configuración de Pinia persisted

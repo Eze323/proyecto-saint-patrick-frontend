@@ -9,7 +9,7 @@
         id="cardNumber"
          placeholder="1234-5678-9012-3456"
         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-secondary-500 focus:border-secondary-500"
-        @input="formatCardNumber"
+        @input="formatCard"
       />
     </div>
     <div class="mb-4">
@@ -40,7 +40,8 @@
 </template>
 
 <script setup lang="ts">
-import { NuxtLink } from '#components';
+import { useCardFormat } from '~/composables/useCardFormat';
+
 
 
 const props = defineProps({
@@ -52,20 +53,12 @@ const emit = defineEmits(['submit']);
 
 const cardNumber = ref('');
 const pin = ref('');
+const { formatCard } = useCardFormat(cardNumber);
 
 const handleSubmit = () => {
   emit('submit', { cardNumber: cardNumber.value, pin: pin.value });
 };
 
-const formatCardNumber = (event:Event) => {
-  const input = event.target as HTMLFormElement;
-  let value= input.value.replace(/\D/g, '');
-  if (value.lenght>16)value=value.slice(0,16);
 
-  const formattedValue= value.match(/.{1,4}/g).join('-') || value;
-
-  cardNumber.value = formattedValue;
-  input.value = formattedValue;
-};
 
 </script>
