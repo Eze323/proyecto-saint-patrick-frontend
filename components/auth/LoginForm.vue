@@ -1,6 +1,6 @@
 <!-- components/auth/LoginForm.vue -->
 <template>
-  <form @submit.prevent="handleSubmit" class="">
+  <form @submit.prevent="handleSubmit" class="space-y-6">
     <div class="mb-4 space-y-2">
       <label for="cardNumber" class="block text-sm font-medium text-primary">Número de Tarjeta</label>
       <input
@@ -23,9 +23,19 @@
       
       />
     </div>
+    <!-- Mensaje de error con Transition -->
+    <Transition
+      enter-active-class="transition ease-out duration-300"
+      enter-from-class="opacity-0 transform -translate-y-2"
+      enter-to-class="opacity-100 transform translate-y-0"
+      leave-active-class="transition ease-in duration-200"
+      leave-from-class="opacity-100 transform translate-y-0"
+      leave-to-class="opacity-0 transform -translate-y-2"
+    >
     <div v-if="error" class="mb-4 text-red-500 text-sm text-center">
       {{ error }}
     </div>
+    </Transition>
     <button
   type="submit"
   :disabled="loading"

@@ -30,16 +30,25 @@
       />
     </div>
 
+      <!-- Mensaje de error con Transition -->
+      <Transition
+      enter-active-class="transition ease-out duration-300"
+      enter-from-class="opacity-0 transform -translate-y-2"
+      enter-to-class="opacity-100 transform translate-y-0"
+      leave-active-class="transition ease-in duration-200"
+      leave-from-class="opacity-100 transform translate-y-0"
+      leave-to-class="opacity-0 transform -translate-y-2"
+    >
     <!-- Mensaje de Error -->
-    <div v-if="error" class="text-sm text-red-600">
+    <div v-if="error" class="text-sm text-red-600 text-center">
       {{ error }}
     </div>
-
+    </Transition>
     <!-- Botón de Registrarse -->
     <button
       type="submit"
       :disabled="loading"
-      class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-secondary bg-primary-600  hover:bg-primary-700 focus:outline-none focus:ring-secondary-500 focus:ring-offset-2 focus:ring-secondary-500 disabled:opacity-50 disabled:cursor-not-allowed"
+      class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-secondary bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
     >
       <span v-if="loading">Registrando...</span>
       <span v-else>Registrarse</span>
