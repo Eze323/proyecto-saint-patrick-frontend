@@ -1,8 +1,8 @@
 <template>
-  <div class="flex h-screen">
+  <div class="flex h-screen overflow-hidden">
     <!-- Menú lateral -->
     <aside
-      class="bg-primary-450 text-black w-64 p-4 flex flex-col transition-transform duration-300 lg:translate-x-0 fixed lg:relative z-50"
+      class="bg-primary-450 text-black w-64 p-4 flex flex-col transition-transform duration-300 lg:translate-x-0 fixed lg:static z-50 h-full"
       :class="isMenuOpen ? 'translate-x-0' : '-translate-x-full'"
     >
       <!-- Contenedor del logo y texto -->
@@ -60,7 +60,7 @@
     </aside>
 
     <!-- Contenido principal -->
-    <main class="flex-1 p-6 transition-all duration-300 lg:ml-4">
+    <main class="flex-1 p-6 transition-all duration-300 lg:ml-4 overflow-y-auto">
       <header class="flex justify-end items-center gap-4 mb-6">
         <!-- UserProfile -->
         <UserProfile />
@@ -74,6 +74,7 @@
         </button>
       </header>
       <slot />
+   
     </main>
     
   </div>
@@ -125,16 +126,18 @@ const links = [
     position: fixed;
     top: 0;
     left: 0;
-    height: 100%;
+    height: 100vh;
     width: 80%;
     background-color: bg-primary-450;
     overflow-y: auto;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   }
 }
 
 /* Estilos para el contenido principal */
 main {
   transition: margin-left 0.3s ease;
+  
 }
 
 @media (max-width: 1023px) {
