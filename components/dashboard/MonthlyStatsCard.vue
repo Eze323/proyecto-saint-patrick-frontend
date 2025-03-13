@@ -15,7 +15,7 @@
   <script setup>
   import { Chart } from 'vue-chartjs';
   import { ref, onMounted } from 'vue';
-  import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
+  import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale,BarController } from 'chart.js';
   import { ClientOnly } from '#components';
   
   // Registrar los componentes necesarios de Chart.js

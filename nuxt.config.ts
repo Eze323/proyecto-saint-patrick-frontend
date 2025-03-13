@@ -70,5 +70,8 @@ export default defineNuxtConfig({
     debug: true,
   },
 ssr: false,
+nitro: {
+  preset: 'netlify', // Usa el preset de Netlify
+},
   
 })
