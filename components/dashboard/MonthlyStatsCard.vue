@@ -21,8 +21,7 @@
   // Registrar los componentes necesarios de Chart.js
   ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale,BarController);
   
-  import 'chart.js/dist/chart.js';
-
+  
   // Datos iniciales
   const datosCompletos = {
     labels: ['Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre', 'Enero', 'Febrero'],
