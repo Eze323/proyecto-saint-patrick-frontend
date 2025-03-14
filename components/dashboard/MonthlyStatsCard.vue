@@ -1,7 +1,7 @@
 <!-- components/Estadisticas.vue -->
 <template>
-    <div class="estadisticas-container bg-primary-450 col-span-2 p-6 shadow-md">
-      <h2>Estadísticas</h2>
+    <div class="estadisticas-container bg-teal-100 col-span-2 p-6 shadow-md rounded border-2 border-secondary">
+      <h2 class="text-white">Estadísticas</h2>
       <button @click="filtrarUltimosMeses">Últimos meses</button>
       <ClientOnly>
         <div v-if="chartData" class="chart-container">
@@ -95,7 +95,7 @@
   
   <style scoped>
   .estadisticas-container {
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
     padding: 20px;
   }

@@ -1,5 +1,5 @@
 <template>
-    <div class="balance-card">
+    <div class="balance-card shadow-md">
       <div class="balance-header">
         <h2>Saldo</h2>
         <span class="hide-balance">Ocultar Saldo <i class="icon-eye-off"></i></span>
