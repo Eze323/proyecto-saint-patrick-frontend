@@ -15,7 +15,7 @@
           <CardAccount
             v-for="account in user.accounts"
             :key="account.cbu"
-            :enterprice="account.enterprice"
+            :enterprise="account.enterprise"
             :cbu="account.cbu"
             :balance="account.balance"
             :type="account.type"

@@ -3,7 +3,7 @@
     <!-- Header -->
     <div class="card-header p-4 border-b border-gray-200">
       <div class="flex justify-between items-center">
-        <p class="card-enterprice text-lg font-semibold text-gray-800">{{ enterprice }}</p>
+        <p class="card-enterprise text-lg font-semibold text-gray-800">{{ enterprise }}</p>
         <span class="card-type bg-yellow-200 text-yellow-800 text-sm font-medium px-2 py-1 rounded-full text-center">{{ type }}</span>
       </div>
     </div>
@@ -72,7 +72,7 @@ import {
 import { ref } from 'vue';
 
 const props = defineProps({
-  enterprice: {
+  enterprise: {
     type: String,
     required: true,
   },
@@ -96,7 +96,7 @@ const toggleBalance = () => {
 };
 
 const handleAction = () => {
-  console.log(`Acción realizada en la tarjeta: ${props.enterprice}`);
+  console.log(`Acción realizada en la tarjeta: ${props.enterprise}`);
 };
 </script>
 

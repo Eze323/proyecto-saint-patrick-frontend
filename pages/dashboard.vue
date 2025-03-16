@@ -7,26 +7,26 @@
       <div class="flex-1 space-y-6">
         <!-- Fila 1: Saldo e Inversiones -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <BalanceCard />
-          <InvestementsCard />
+          <BalanceCard :user="authStore.user"/>
+          <InvestementsCard :user="authStore.user" />
         </div>
 
         <!-- Fila 2: Estadísticas -->
         <div class="grid grid-cols-1 gap-6">
-          <MonthlyStatsCard />
+          <MonthlyStatsCard :user="authStore.user"/>
         </div>
 
         <!-- Fila 3: Reservas y Gastos Explicados -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <ReservationsCard />
-          <ExpensesCard />
+          <ReservationsCard :user="authStore.user"/>
+          <ExpensesCard :user="authStore.user"/>
           <!-- Puedes agregar más ítems aquí y se apilarán verticalmente -->
         </div>
       </div>
 
       <!-- Columna derecha: Últimas Transacciones (fija) -->
       <div class="w-full md:w-1/3">
-        <TransactionsCard class="h-full" />
+        <TransactionsCard class="h-full" :user="authStore.user"/>
       </div>
     </div>
   </div>
