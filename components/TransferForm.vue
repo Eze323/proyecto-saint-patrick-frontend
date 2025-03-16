@@ -17,7 +17,7 @@
           <select v-model="transfersStore.form.accountId" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" required>
   <option value="" disabled>Selecciona una cuenta</option>
   <option v-for="account in authStore.user?.accounts" :key="account.cbu" :value="account.cbu">
-    {{ account.enterprice }} - {{ account.type }} (Saldo: ${{ account.balance.toLocaleString() }})
+    {{ account.enterprise }} - {{ account.type }} (Saldo: ${{ account.balance.toLocaleString() }})
   </option>
 </select>
         </div>

@@ -20,6 +20,7 @@ export default defineEventHandler(async (event) => {
   if (user) {
     //simular almacenar el usuario autenticado
     //const authStore = useAuthStore();
+    //authStore.setUser(user);
     
     // Si las credenciales son válidas, devolver el token y los datos del usuario
     return {
@@ -31,6 +32,12 @@ export default defineEventHandler(async (event) => {
         accounts: user.accounts,
         cards: user.cards,
         transactions: user.transactions,
+        investments: user.investments, // Añadido
+        monthlyStats: user.monthlyStats, // Añadido
+        reservations: user.reservations, // Añadido
+        expensesBreakdown: user.expensesBreakdown, // Añadido
+        cardNumber: user.cardNumber, // Añadido
+        pin: user.pin, // Añadido
       },
 
     };
