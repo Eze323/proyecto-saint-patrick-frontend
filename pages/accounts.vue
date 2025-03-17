@@ -19,39 +19,11 @@
             :cbu="account.cbu"
             :balance="account.balance"
             :type="account.type"
+            @transfers="handleTransfer"
           />
         </div>
       </div>
 
-      <!-- Sección de transacciones -->
-      <!-- <div class="transactions-section">
-        <h2 class="text-primary text-xl lg:text-2xl font-semibold mb-4">Últimas transacciones</h2>
-        <div class="overflow-x-auto">
-          <table class="min-w-full bg-white rounded-lg shadow-sm overflow-hidden">
-            <thead class="bg-gray-50">
-              <tr>
-                <th class="py-3 px-4 text-left text-sm sm:text-base font-medium text-gray-700">Fecha</th>
-                <th class="py-3 px-4 text-left text-sm sm:text-base font-medium text-gray-700">Destinatario</th>
-                <th class="py-3 px-4 text-left text-sm sm:text-base font-medium text-gray-700">Descripción</th>
-                <th class="py-3 px-4 text-left text-sm sm:text-base font-medium text-gray-700">Monto</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-              <tr v-for="transaction in user.transactions" :key="transaction.id" class="hover:bg-gray-50 transition-colors">
-                <td class="py-3 px-4 text-sm sm:text-base text-gray-700">{{ transaction.date }}</td>
-                <td class="py-3 px-4 text-sm sm:text-base text-gray-700">{{ transaction.recipient }}</td>
-                <td class="py-3 px-4 text-sm sm:text-base text-gray-700">{{ transaction.description }}</td>
-                <td
-                  class="py-3 px-4 text-sm sm:text-base font-medium"
-                  :class="{ 'text-red-500': transaction.amount < 0, 'text-green-500': transaction.amount >= 0 }"
-                >
-                  {{ transaction.amount }} USD
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
@@ -67,6 +39,13 @@ const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
 
 definePageMeta({ layout: 'authenticated' });
+
+const router = useRouter();
+
+const handleTransfer = (cbu: string) => {
+  navigateTo({ path: '/transfers', query: { selectedAccount: cbu } });
+}
+
 </script>
 
 <style scoped>

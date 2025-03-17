@@ -104,6 +104,7 @@
   import { useTransfersStore } from '~/stores/transfers.store';
 import SusscesModal from './SusscesModal.vue';
 import { useCardFormat } from '~/composables/useCardFormat';
+const route = useRoute();
 
 const authStore = useAuthStore();
 const transfersStore = useTransfersStore();
@@ -111,6 +112,15 @@ const transfersStore = useTransfersStore();
 // Creamos un ref local para el input de tarjeta
 const cardNumber = ref(transfersStore.form.cardNumber);
 const { formatCard } = useCardFormat(cardNumber);
+// Obtener el parámetro selectedAccount de la URL
+const selectedAccount = ref<string>(route.query.selectedAccount as string || '');
+
+// Sincronizar el valor de selectedAccount con el store
+onMounted(() => {
+  if (selectedAccount.value) {
+    transfersStore.form.accountId = selectedAccount.value;
+  }
+});
 
 // Sincronizamos el ref local con el store
 watch(cardNumber, (newValue) => {

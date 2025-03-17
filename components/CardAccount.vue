@@ -70,6 +70,7 @@ import {
   EyeSlashIcon,
 } from '@heroicons/vue/24/outline';
 import { ref } from 'vue';
+import { defineEmits } from 'vue';
 
 const props = defineProps({
   enterprise: {
@@ -96,8 +97,10 @@ const toggleBalance = () => {
 };
 
 const handleAction = () => {
-  console.log(`Acción realizada en la tarjeta: ${props.enterprise}`);
+  emit('transfers',props.cbu)
 };
+
+const emit = defineEmits(['transfers']);
 </script>
 
 <style scoped>
