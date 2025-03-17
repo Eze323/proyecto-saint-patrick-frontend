@@ -7,7 +7,7 @@
     >
       <!-- Contenedor del logo y texto -->
       <div class="text-3xl mb-6 flex flex-col items-center justify-center max-w-[13rem]">
-        <NuxtLink to="/" class="text-center text-white hover:text-secondary transition-colors">
+        <NuxtLink to="/" class="text-center text-white hover:text-secondary transition-colors" @click="toggleMenu">
           <img src="~/assets/images/logo.webp" alt="Logo Saint Patrick" class="h-10 mx-auto mb-2" />
           <span class="text-secondary font-bold">B</span>anco
           <span class="block">
@@ -18,7 +18,7 @@
       </div>
 
       <!-- Menú de navegación -->
-      <nav class="flex-1">
+      <nav class="flex-1 overflow-y-auto">
         <ul class="space-y-2">
           <li v-for="link in links" :key="link.to">
             <NuxtLink
@@ -34,7 +34,7 @@
       </nav>
 
       <!-- Menú inferior (seguridad y cerrar sesión) -->
-      <div class="mt-auto">
+      <div class="mt-auto pb-4">
         <ul class="space-y-2">
           <li>
             <NuxtLink
@@ -74,9 +74,7 @@
         </button>
       </header>
       <slot />
-   
     </main>
-    
   </div>
 </template>
 
@@ -128,16 +126,28 @@ const links = [
     left: 0;
     height: 100vh;
     width: 80%;
-    background-color: bg-primary-450;
-    overflow-y: auto;
+    background-color: #2D5B5B; /* Ajustamos el color de fondo usando bg-primary-450 */
+    overflow-y: auto; /* Aseguramos que el scroll funcione */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   }
+}
+
+/* Aseguramos que el contenedor del aside sea completamente desplazable */
+aside {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribuye el espacio entre el contenido superior e inferior */
+}
+
+/* Aseguramos que el nav tenga scroll interno */
+nav {
+  flex-grow: 1; /* Permite que el nav crezca para ocupar el espacio disponible */
+  overflow-y: auto; /* Scroll interno para el nav */
 }
 
 /* Estilos para el contenido principal */
 main {
   transition: margin-left 0.3s ease;
-  
 }
 
 @media (max-width: 1023px) {
@@ -148,23 +158,28 @@ main {
 
 /* Estilos para el enlace activo */
 .router-link-active {
-  border-left: 3px solid secondary;
-  color: secondary;
+  border-left: 3px solid #FFD700; /* Usamos el color secondary */
+  color: #FFD700;
   font-weight: 600;
   border-radius: 6px;
 }
 
 /* Estilos para el logo y texto del banco */
 .text-secondary {
-  color: secondary;
+  color: #FFD700; /* Color secondary */
 }
 
 /* Estilos para el hover en enlaces */
 .hover\:bg-secondary:hover {
-  background-color: secondary;
+  background-color: #FFD700; /* Color secondary */
 }
 
 .hover\:text-white:hover {
   color: white;
+}
+
+/* Añadimos padding inferior al contenedor del menú inferior */
+.mt-auto {
+  padding-bottom: 20px; /* Espacio adicional para que "Cerrar Sesión" no quede pegado al borde */
 }
 </style>
