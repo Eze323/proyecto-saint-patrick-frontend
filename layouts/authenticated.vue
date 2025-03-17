@@ -139,7 +139,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between; /* Distribuye el espacio entre el contenido superior e inferior */
-  background-color: #2D5B5B; /* bg-primary-450 */
+  background-color: bg-primary-450; /* bg-primary-450 */
  }
  
  /* Aseguramos que el nav tenga scroll interno */
