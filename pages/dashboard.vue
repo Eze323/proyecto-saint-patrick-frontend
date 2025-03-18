@@ -7,7 +7,15 @@
       <div class="flex-1 space-y-6">
         <!-- Fila 1: Saldo e Inversiones -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <BalanceCard :user="authStore.user"/>
+          <!-- <BalanceCard :user="authStore.user"/> -->
+           <CardAccount 
+            :key="authStore.user.accounts[0].cbu"
+            :enterprise="authStore.user.accounts[0].enterprise"
+            :cbu="authStore.user.accounts[0].cbu"
+            :balance="authStore.user.accounts[0].balance"
+            :type="authStore.user.accounts[0].type"
+            @transfers="handleTransfer"
+           />
           <InvestementsCard :user="authStore.user" />
         </div>
 
@@ -33,27 +41,34 @@
 </template>
 
 <script setup lang="ts">
+  import { useAuthStore } from '@/stores/auth.store';
+    import { useRouter } from 'vue-router'; // O 'nuxt/app' si prefieres usar Nuxt
+  
   definePageMeta({
     layout: 'authenticated', // Usa el layout para usuarios logueados
   });
 
+  const authStore = useAuthStore();
+  const user = computed(() => authStore.user);
+  const router = useRouter();
   // import { ShoppingCartIcon, Bars3Icon } from '@heroicons/vue/24/solid';
-  import BalanceCard from '@/components/dashboard/BalanceCard.vue';
-import ExpensesCard from '@/components/dashboard/ExpensesCard.vue';
+  import ExpensesCard from '@/components/dashboard/ExpensesCard.vue';
   import InvestementsCard from '@/components/dashboard/InvestementsCard.vue';
 import MonthlyStatsCard from '@/components/dashboard/MonthlyStatsCard.vue';
 import ReservationsCard from '@/components/dashboard/ReservationsCard.vue';
 import TransactionsCard from '@/components/dashboard/TransactionsCard.vue';
+import CardAccount from '~/components/CardAccount.vue';
 
 
+// Función para manejar la transferencia
+const handleTransfer = (cbu: string) => {
+  navigateTo({ path: '/transfers', query: { selectedAccount: cbu } }); // Usar navigateTo de Nuxt
+};
 
-  const authStore = useAuthStore();
-  const user = computed(() => authStore.user);
-
-  const logout = () => {
-    authStore.clearToken();
-    navigateTo('/auth/login');
-  };
+const logout = () => {
+  authStore.clearToken();
+  navigateTo('/auth/login');
+};
 </script>
 
 <style scoped>
