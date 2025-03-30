@@ -1,9 +1,10 @@
 import { useAuthStore } from '@/stores/auth.store';
 import type { Credentials, LoginResponse } from '~/utils/types';
 
+
 export const useAuth = () => {
   const authStore = useAuthStore();
-
+  const config = useRuntimeConfig();
   /**
    * Inicia sesión con las credenciales proporcionadas.
    * @param credentials - Objeto con el número de tarjeta y el PIN.
@@ -11,7 +12,9 @@ export const useAuth = () => {
   const login = async (credentials: Credentials) => {
     try {
       // Realiza la solicitud al endpoint de login
-      const response = await $fetch<LoginResponse>('/api/auth/login', {
+      const response = await $fetch<LoginResponse>(
+        // config.public.apiUrl
+        config.public.apiBaseUrl+'/api/login', {
         method: 'POST',
         body: credentials,
       });
@@ -30,11 +33,15 @@ export const useAuth = () => {
       alert('Credenciales inválidas. Por favor, inténtalo de nuevo.');
     }
   };
+
   const register = async (credentials: Credentials) => {
+    const config = useRuntimeConfig();
     // Lógica de registro
     try {
       // Simula una llamada a la API
-      const response = await fetch('/api/register', {
+      const response = await fetch(
+        // config.public.apiBaseUrl+
+        config.public.apiBaseUrl+'/api/register', {
         method: 'POST',
         body: JSON.stringify(credentials),
       });
@@ -55,6 +62,11 @@ export const useAuth = () => {
   const logout = () => {
     // Limpia el token y los datos del usuario en el store
     authStore.clearToken();
+  
+    // Limpia el localStorage
+    localStorage.removeItem('auth-token');
+    localStorage.removeItem('auth-user');
+    // Limpia el sessionStorage
 
     // Redirige al usuario a la página de login
     navigateTo('/auth/login');

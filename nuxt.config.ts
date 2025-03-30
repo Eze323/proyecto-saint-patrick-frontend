@@ -73,5 +73,10 @@ ssr: false,
 nitro: {
   preset: 'netlify', // Usa el preset de Netlify
 },
+runtimeConfig:{
+  public: {
+    apiBaseUrl: 'https://api-bank-saint-patrick.laravel.cloud' // Valor por defecto
+  }
+}
   
 })

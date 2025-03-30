@@ -102,6 +102,7 @@ const transacciones = computed(() => {
   return props.user?.transactions || [];
 });
 
+
 // Filtrar transacciones según el filtro seleccionado
 const transaccionesFiltradas = computed(() => {
   if (filtro.value === 'todo') return transacciones.value;

@@ -69,8 +69,7 @@ import {
   EyeIcon,
   EyeSlashIcon,
 } from '@heroicons/vue/24/outline';
-import { ref } from 'vue';
-import { defineEmits } from 'vue';
+
 
 const props = defineProps({
   enterprise: {

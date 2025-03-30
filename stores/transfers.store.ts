@@ -1,7 +1,11 @@
 import { defineStore } from 'pinia';
 import { useAuthStore } from './auth.store';
 
+const config = useRuntimeConfig();
+
 export const useTransfersStore = defineStore('transfers', {
+
+  
   state: () => ({
     form: {
       accountId: '',
@@ -25,18 +29,23 @@ export const useTransfersStore = defineStore('transfers', {
     async validateDestination() {
       this.errorMessage = '';
       const { destinationType, cbuAlias, cardNumber } = this.form;
+      const authStore = useAuthStore();
 
       if (destinationType === 'cbuAlias' && !cbuAlias) return;
       if (destinationType === 'card' && !cardNumber) return;
 
       try {
-        const endpoint = destinationType === 'cbuAlias' ? '/api/check-user' : '/api/check-card';
+        const endpoint = destinationType === 'cbuAlias' ? config.public.apiBaseUrl+'/api/check-user' : config.public.apiBaseUrl+'/api/check-card';
         const value = destinationType === 'cbuAlias' ? cbuAlias : cardNumber;
 
         const response = await $fetch(endpoint, {
           method: 'POST',
           body: { [destinationType]: value },
-        });
+          headers: {
+            'Authorization': `Bearer ${authStore.token}`,
+          },
+          
+        }) as { exists: boolean; name?: string; lastname?: string };
 
         if (response.exists) {
             if ('name' in response && 'lastname' in response) {
@@ -61,29 +70,24 @@ export const useTransfersStore = defineStore('transfers', {
         this.errorMessage = '';
         const authStore = useAuthStore();
         const { monto, accountId } = this.form;
-      
- //       console.log('Validando monto:', { monto, accountId });
-   //     console.log('Usuario en authStore:', authStore.user);
-     //   console.log('Cuentas disponibles:', authStore.user?.accounts);
-      
+
         if (!monto || monto <= 0) {
           this.errorMessage = 'El monto debe ser mayor a 0.';
-       //   console.log('Error: Monto inválido');
-          return;
+           return;
         }
       
         const selectedAccount = authStore.user?.accounts.find(acc => acc.cbu === accountId);
-     //  console.log('Cuenta seleccionada:', selectedAccount);
+     
       
         if (!selectedAccount) {
           this.errorMessage = 'No se encontró la cuenta seleccionada.';
- //         console.log('Error: Cuenta no encontrada');
+   
           return;
         }
       
         if (monto > selectedAccount.balance) {
           this.errorMessage = 'No tienes suficiente saldo en la cuenta seleccionada.';
-   //       console.log('Error: Saldo insuficiente', { monto, balance: selectedAccount.balance });
+          return;
         }
       },
 
@@ -111,23 +115,23 @@ export const useTransfersStore = defineStore('transfers', {
       
         this.isSubmitting = true;
       
-   //     console.log('Datos del formulario:', this.form);
-   //     console.log('User ID desde authStore:', authStore.user?.id || 'No disponible');
-   //     console.log('Usuario completo en authStore:', authStore.user);
-      
+         // Preparar el cuerpo de la solicitud      
         const requestBody = {
           ...this.form,
           userId: authStore.user?.id || 'unknown',
         };
-    //    console.log('Cuerpo completo enviado:', requestBody);
-      
+          
         try {
-          const response: any = await $fetch('/api/transfers', {
+          const response: any = await $fetch(
+            config.public.apiBaseUrl+'/api/transfers', {
             method: 'POST',
             body: requestBody,
+            headers: {
+              'Authorization': `Bearer ${authStore.token}`,
+            },
           });
       
-     //     console.log('Respuesta del servidor:', response);
+     
       
           if (typeof response === 'string' && response.startsWith('<!DOCTYPE html')) {
             throw new Error('Respuesta inesperada del servidor (HTML en lugar de JSON)');
@@ -137,16 +141,17 @@ export const useTransfersStore = defineStore('transfers', {
             this.successMessage = 'Transferencia realizada con éxito. Revisa tu email para el comprobante.';
             this.resetForm();
             try {
-                const updatedAccounts = await $fetch('/api/user/accounts', {
+                const updatedAccounts = await $fetch<{ enterprise: string; cbu: string; type: string; balance: number; alias?: string; currency?: string; status?: string; accountNumber?: string; createdAt?: string; updatedAt?: string; }[]>(config.public.apiBaseUrl+'/api/user/accounts', {
                   method: 'GET',
                   query: { userId: authStore.user?.id }, // Pasar el userId del usuario autenticado
+                  headers: {
+                    'Authorization': `Bearer ${authStore.token}`,
+                  },
                 });
                 if (authStore.user) {
                   authStore.user.accounts = updatedAccounts;
                 }
-                // if (authStore.user) {
-                //   console.log('Cuentas actualizadas:', authStore.user.accounts);
-                // }
+                
               } catch (updateError) {
                 console.error('Error al actualizar cuentas:', updateError);
               }
@@ -158,6 +163,7 @@ export const useTransfersStore = defineStore('transfers', {
             this.errorMessage = 'Hubo un problema al enviar la transferencia. Intenta de nuevo.';
           } finally {
             this.isSubmitting = false;
+            navigateTo('/dashboard');
           }
       },
 

@@ -37,8 +37,11 @@ export const useAuthStore = defineStore('auth', {
 
     async fetchUser() {
       if (this.token) {
+
+        const config = useRuntimeConfig();
         try {
-          const user = await $fetch<UserProfile>('/api/user', {
+          const user = await $fetch<UserProfile>(
+            config.public.apiBaseUrl +'/api/user', {
             headers: {
               Authorization: `Bearer ${this.token}`,
             },
