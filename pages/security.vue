@@ -12,6 +12,7 @@
           v-for="tab in tabs"
           :key="tab.value"
           as="button"
+          v-slot="{ selected }"
           class="flex items-center gap-2 px-2 py-2 sm:px-3 sm:py-2 cursor-pointer font-semibold transition-all duration-300 focus:outline-none relative"
         >
           <component :is="tab.icon" class="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
@@ -160,7 +161,6 @@
 
 <script setup>
 import { useAuthStore } from '~/stores/auth.store';
-import { ref, computed, watch } from 'vue';
 import {
   LockClosedIcon,
   DevicePhoneMobileIcon,
@@ -172,7 +172,7 @@ import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue';
 definePageMeta({ layout: 'authenticated' });
 
 const authStore = useAuthStore();
-const user = computed(() => authStore.user);
+const user = computed(() => authStore.user.profile);
 
 // Definición de los tabs
 const tabs = [
@@ -222,17 +222,13 @@ watch(user, (newUser) => {
       country: '',
     };
   }
-}, { immediate: true }); // Ejecutar inmediatamente al montar el componente
+}, { immediate: true });
 
 const saveChanges = async () => {
   try {
-    // Llamar a updateProfile desde el authStore con los datos del formulario
     await authStore.updateProfile(formData.value);
-
-    // Mostrar mensaje de éxito
     alert('Datos guardados exitosamente!');
   } catch (error) {
-    // Manejar errores
     console.error('Error al guardar los datos:', error);
     alert('Error al guardar los datos. Por favor, intenta de nuevo.');
   }
