@@ -9,7 +9,7 @@
 
       <TabPanels>
         <!-- Panel de Iniciar Sesión -->
-        <TabPanel class="bg-amber-200 p-6 rounded-lg shadow-md">
+        <TabPanel class="bg-secondary-550 p-6 rounded-lg shadow-md">
           <LoginForm
             @submit="handleLogin"
             :loading="isLoading"
@@ -18,7 +18,7 @@
         </TabPanel>
 
         <!-- Panel de Registrarse -->
-        <TabPanel class="bg-amber-200 p-6 rounded-lg shadow-md">
+        <TabPanel class="bg-secondary-550 p-6 rounded-lg shadow-md">
           <RegisterForm
             @submit="handleRegister"
             :loading="isLoading"
@@ -27,12 +27,12 @@
         </TabPanel>
       </TabPanels>
 
-      <TabList class="flex justify-center space-x-2 mb-6 bg-amber-100 p-1 rounded-lg">
+      <TabList class="flex justify-center space-x-2 mb-6 bg-secondary-550 p-1 rounded-lg">
         <Tab as="template" v-slot="{ selected }">
           <button
             :class="[
               'w-40 py-2.5 text-sm font-medium rounded-md transition-colors',
-              selected ? 'bg-amber-300 text-stone-800 shadow' : 'text-stone-500 hover:bg-amber-200',
+              selected ? 'bg-amber-300 text-stone-800 shadow border-2 border-primary-450' : 'text-stone-500 hover:bg-amber-200',
             ]"
           >
             Iniciar Sesión
@@ -42,7 +42,7 @@
           <button
             :class="[
               'w-40 py-2.5 text-sm font-medium rounded-md transition-colors',
-              selected ? 'bg-amber-300 text-stone-800 shadow' : 'text-stone-500 hover:bg-amber-200',
+              selected ? 'bg-amber-300 text-stone-800 shadow border-2 border-primary-450' : 'text-stone-500 hover:bg-amber-200',
             ]"
           >
             Registrarse

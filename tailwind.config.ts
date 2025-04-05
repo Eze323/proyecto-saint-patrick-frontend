@@ -34,6 +34,7 @@ export default {
           300: '#FFDE33',
           400: '#FFD500',
           500: '#FFC107',
+          550: '#F7C548B2', // Amarillo claro para detalles
           600: '#FFB300',
           700: '#FFA000',
           800: '#FF8F00',

@@ -54,6 +54,27 @@ export const useAuthStore = defineStore('auth', {
         }
       }
     },
+
+    async updateProfile(profileData: Partial<UserProfile>) {
+      const config = useRuntimeConfig();
+      try {
+        const response = await $fetch<UserProfile>(`${config.public.apiBaseUrl}/api/customer/update`, {
+          method: 'PUT',
+          body: JSON.stringify(profileData),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${this.token}`, // Asegúrate de incluir el token si el backend lo requiere
+          },
+        });
+
+        // Actualizar el store y localStorage con los datos devueltos por el backend
+        this.setUser(response);
+        return true;
+      } catch (error) {
+        console.error('Error updating profile:', error);
+        throw error; // O manejar el error con un alert/notificación
+      }
+    },
   },
   persist: {
     storage: import.meta.client ? localStorage : undefined, // Solo usa localStorage en el cliente

@@ -6,7 +6,7 @@
       </div>
   
       <!-- Tabs -->
-      <div class="flex justify-evenly border-b border-gray-300 mb-6">
+      <div class="flex justify-evenly mb-6">
         <button
           v-for="tab in tabs"
           :key="tab.value"

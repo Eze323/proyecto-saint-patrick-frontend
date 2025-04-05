@@ -56,6 +56,7 @@ export const useAuth = () => {
       throw error;
     }
   };
+  
   /**
    * Cierra la sesión del usuario.
    */
