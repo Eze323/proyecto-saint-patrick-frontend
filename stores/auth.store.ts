@@ -68,7 +68,9 @@ export const useAuthStore = defineStore('auth', {
         });
 
         // Actualizar el store y localStorage con los datos devueltos por el backend
-        this.setUser(response);
+        // this.setUser(response);
+        this.fetchUser();
+        console.log('Profile updated successfully:');
         return true;
       } catch (error) {
         console.error('Error updating profile:', error);

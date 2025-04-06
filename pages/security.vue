@@ -128,8 +128,10 @@
             <button
               type="submit"
               class="w-full sm:max-w-[50%] mx-auto bg-[#00595c] text-white p-2 sm:p-3 text-sm sm:text-base font-bold rounded-md mt-3 hover:bg-[#004244] block"
+              :disabled="isSaving"
             >
-              Guardar Cambios
+              <span v-if="isSaving">Guardando...</span>
+              <span v-else>Guardar Cambios</span>
             </button>
           </form>
         </TabPanel>
@@ -161,6 +163,7 @@
 
 <script setup>
 import { useAuthStore } from '~/stores/auth.store';
+
 import {
   LockClosedIcon,
   DevicePhoneMobileIcon,
@@ -172,17 +175,9 @@ import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue';
 definePageMeta({ layout: 'authenticated' });
 
 const authStore = useAuthStore();
-const user = computed(() => authStore.user.profile);
+const user = computed(() => authStore.user);
 
-// Definición de los tabs
-const tabs = [
-  { value: 'datos-personales', name: 'Datos personales', icon: Cog8ToothIcon },
-  { value: 'clave-biometria', name: 'Clave y Biometría', icon: LockClosedIcon },
-  { value: 'dispositivos-conectados', name: 'Dispositivos conectados', icon: DevicePhoneMobileIcon },
-  { value: 'actividades-sospechosas', name: 'Actividades sospechosas', icon: ExclamationCircleIcon },
-];
-
-// Datos del formulario para Datos personales
+// Estado para el formulario
 const formData = ref({
   name: '',
   lastname: '',
@@ -195,19 +190,29 @@ const formData = ref({
   country: '',
 });
 
-// Sincronizar formData con user cuando cambie
+// Estado para manejar el guardado
+const isSaving = ref(false);
+
+// Cargar el usuario al montar el componente
+onMounted(async () => {
+  if (authStore.token && !authStore.user) {
+    await authStore.fetchUser();
+  }
+});
+
+// Sincronizar formData con user.profile cuando cambie
 watch(user, (newUser) => {
-  if (newUser) {
+  if (newUser && newUser.profile) {
     formData.value = {
-      name: newUser.name || '',
-      lastname: newUser.lastname || '',
-      email: newUser.email || '',
-      phone: newUser.phone || '',
-      address: newUser.address || '',
-      zip: newUser.zip || '',
-      locality: newUser.locality || '',
-      province: newUser.province || '',
-      country: newUser.country || '',
+      name: newUser.profile.name || '',
+      lastname: newUser.profile.lastname || '',
+      email: newUser.profile.email || '',
+      phone: newUser.profile.phone || '',
+      address: newUser.profile.address || '',
+      zip: newUser.profile.zip || '',
+      locality: newUser.profile.locality || '',
+      province: newUser.profile.province || '',
+      country: newUser.profile.country || '',
     };
   } else {
     formData.value = {
@@ -224,13 +229,43 @@ watch(user, (newUser) => {
   }
 }, { immediate: true });
 
+// Definición de los tabs
+const tabs = [
+  { value: 'datos-personales', name: 'Datos personales', icon: Cog8ToothIcon },
+  { value: 'clave-biometria', name: 'Clave y Biometría', icon: LockClosedIcon },
+  { value: 'dispositivos-conectados', name: 'Dispositivos conectados', icon: DevicePhoneMobileIcon },
+  { value: 'actividades-sospechosas', name: 'Actividades sospechosas', icon: ExclamationCircleIcon },
+];
+
 const saveChanges = async () => {
   try {
-    await authStore.updateProfile(formData.value);
+    isSaving.value = true;
+    // Mapear formData a la estructura esperada por UserProfile
+    const profileData = {
+      profile: {
+        name: formData.value.name,
+        lastname: formData.value.lastname,
+        email: formData.value.email,
+        phone: formData.value.phone || undefined,
+        address: formData.value.address || undefined,
+        zip: formData.value.zip || undefined,
+        locality: formData.value.locality || undefined,
+        province: formData.value.province || undefined,
+        country: formData.value.country || undefined,
+      },
+    };
+    // Llamar a updateProfile desde el authStore con los datos del formulario
+    await authStore.updateProfile(profileData);
+    // Mostrar mensaje de éxito
     alert('Datos guardados exitosamente!');
+    // Redirigir a /dashboard después de guardar
+    await navigateTo('/dashboard');
   } catch (error) {
+    // Manejar errores
     console.error('Error al guardar los datos:', error);
     alert('Error al guardar los datos. Por favor, intenta de nuevo.');
+  } finally {
+    isSaving.value = false;
   }
 };
 </script>
