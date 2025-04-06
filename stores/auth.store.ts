@@ -67,11 +67,19 @@ export const useAuthStore = defineStore('auth', {
           },
         });
 
-        // Actualizar el store y localStorage con los datos devueltos por el backend
-        // this.setUser(response);
-        this.fetchUser();
-        console.log('Profile updated successfully:');
-        return true;
+        // Conservar todos los datos existentes del usuario y solo actualizar el perfil
+    const updatedUser = {
+      ...this.user,
+      profile: {
+        ...this.user.profile,
+        ...response.profile, // Sobrescribe solo los campos del perfil que vienen en la respuesta
+      },
+    };
+
+    this.setUser(updatedUser); // Guarda el usuario actualizado
+
+    console.log('Perfil actualizado correctamente:', updatedUser);
+    return true;
       } catch (error) {
         console.error('Error updating profile:', error);
         throw error; // O manejar el error con un alert/notificación

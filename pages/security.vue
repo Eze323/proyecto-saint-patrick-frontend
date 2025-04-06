@@ -163,7 +163,7 @@
 
 <script setup>
 import { useAuthStore } from '~/stores/auth.store';
-
+import { ref, computed, watch, onMounted } from 'vue';
 import {
   LockClosedIcon,
   DevicePhoneMobileIcon,
@@ -175,7 +175,7 @@ import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue';
 definePageMeta({ layout: 'authenticated' });
 
 const authStore = useAuthStore();
-const user = computed(() => authStore.user);
+const user = computed(() => authStore.user.profile);
 
 // Estado para el formulario
 const formData = ref({
@@ -200,19 +200,19 @@ onMounted(async () => {
   }
 });
 
-// Sincronizar formData con user.profile cuando cambie
+// Sincronizar formData con user cuando cambie
 watch(user, (newUser) => {
-  if (newUser && newUser.profile) {
+  if (newUser) {
     formData.value = {
-      name: newUser.profile.name || '',
-      lastname: newUser.profile.lastname || '',
-      email: newUser.profile.email || '',
-      phone: newUser.profile.phone || '',
-      address: newUser.profile.address || '',
-      zip: newUser.profile.zip || '',
-      locality: newUser.profile.locality || '',
-      province: newUser.profile.province || '',
-      country: newUser.profile.country || '',
+      name: newUser.name || '',
+      lastname: newUser.lastname || '',
+      email: newUser.email || '',
+      phone: newUser.phone || '',
+      address: newUser.address || '',
+      zip: newUser.zip || '',
+      locality: newUser.locality || '',
+      province: newUser.province || '',
+      country: newUser.country || '',
     };
   } else {
     formData.value = {
@@ -240,26 +240,10 @@ const tabs = [
 const saveChanges = async () => {
   try {
     isSaving.value = true;
-    // Mapear formData a la estructura esperada por UserProfile
-    const profileData = {
-      profile: {
-        name: formData.value.name,
-        lastname: formData.value.lastname,
-        email: formData.value.email,
-        phone: formData.value.phone || undefined,
-        address: formData.value.address || undefined,
-        zip: formData.value.zip || undefined,
-        locality: formData.value.locality || undefined,
-        province: formData.value.province || undefined,
-        country: formData.value.country || undefined,
-      },
-    };
     // Llamar a updateProfile desde el authStore con los datos del formulario
-    await authStore.updateProfile(profileData);
+    await authStore.updateProfile(formData.value);
     // Mostrar mensaje de éxito
     alert('Datos guardados exitosamente!');
-    // Redirigir a /dashboard después de guardar
-    await navigateTo('/dashboard');
   } catch (error) {
     // Manejar errores
     console.error('Error al guardar los datos:', error);
