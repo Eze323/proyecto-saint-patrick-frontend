@@ -73,42 +73,47 @@ export const useAuthStore = defineStore('auth', {
       this.error = null; // Limpia errores previos
       const config = useRuntimeConfig();
       const { addNotification } = useNotifications();
+    
       try {
-        const response = await $fetch<UserProfile>(
-          `${config.public.apiBaseUrl}/api/customer/update`,
+        const response = await $fetch<{ success: boolean; user: { id: number; email: string; profile: UserProfile }; message: string }>(
+          `${config.public.apiBaseUrl}/api/customer/update`, // Ajusta la URL según tu backend
           {
-            method: 'PUT',
-            body: JSON.stringify(profileData),
+            method: 'PUT', // Coincide con tu método
+            body: profileData, // No necesitas JSON.stringify, $fetch lo hace por ti
             headers: {
               'Content-Type': 'application/json',
               Authorization: `Bearer ${this.token}`,
             },
           }
         );
-
-        const updatedUser = {
-          ...this.user,
-          profile: {
-            ...this.user.profile,
-            ...response.profile,
-          },
-        };
-
-        this.setUser(updatedUser); // Actualiza el usuario y el timestamp
-        console.log('Perfil actualizado correctamente:', updatedUser);
-        return true;
-      } /*catch (error) {
-        this.error = 'Error updating profile'; // Guarda el error
+    
+        // Verifica la respuesta y actualiza el usuario
+        if (response.success) {
+          console.log('Usuario recibido del backend:', response.user);
+          if (this.user) {
+            Object.assign(this.user, {
+              ...this.user,
+              ...response.user, // Asume que response.user tiene los campos directamente
+            });
+          } //else {
+          //   this.user = { ...response.user }; // Caso inicial
+          // }
+          console.log('Usuario en store tras actualización:', this.user);
+          addNotification(response.message || 'Perfil actualizado correctamente', 'success');
+          return true;
+        } else {
+          throw new Error(response.message || 'Respuesta inesperada del servidor');
+        }
+      } catch (error: any) {
+        const errorMsg = error.response?.data?.message || error.message || 'Error al actualizar el perfil';
+        this.error = errorMsg;
         console.error('Error updating profile:', error);
-        throw error;*/
-        catch (error) {
-          const errorMsg = error.response?.data?.message || error.message || 'Error desconocido';
-          addNotification(errorMsg, 'error');
-        
+        addNotification(errorMsg, 'error');
+        throw error; // Propaga el error para que el componente lo maneje si es necesario
       } finally {
         this.isLoading = false; // Finaliza carga
       }
-    },
+    }
   },
   persist: {
     storage: import.meta.client ? localStorage : undefined, // Solo usa localStorage en el cliente

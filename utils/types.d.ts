@@ -114,3 +114,16 @@ export interface Credentials {
   cardNumber: string;
   pin: string;
 }
+
+// Interfaz para la respuesta de validación de usuario
+interface ValidationResponse {
+  exists: boolean;
+  name?: string;
+  lastname?: string;
+}
+
+// Interfaz para la respuesta de transferencia
+interface TransferResponse {
+  success: boolean;
+  message?: string;
+}
