@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import type { UserProfile } from '~/utils/types';
+import { useNotifications } from '../composables/useNotifications';
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -71,6 +72,7 @@ export const useAuthStore = defineStore('auth', {
       this.isLoading = true; // Inicia carga
       this.error = null; // Limpia errores previos
       const config = useRuntimeConfig();
+      const { addNotification } = useNotifications();
       try {
         const response = await $fetch<UserProfile>(
           `${config.public.apiBaseUrl}/api/customer/update`,
@@ -95,10 +97,14 @@ export const useAuthStore = defineStore('auth', {
         this.setUser(updatedUser); // Actualiza el usuario y el timestamp
         console.log('Perfil actualizado correctamente:', updatedUser);
         return true;
-      } catch (error) {
+      } /*catch (error) {
         this.error = 'Error updating profile'; // Guarda el error
         console.error('Error updating profile:', error);
-        throw error;
+        throw error;*/
+        catch (error) {
+          const errorMsg = error.response?.data?.message || error.message || 'Error desconocido';
+          addNotification(errorMsg, 'error');
+        
       } finally {
         this.isLoading = false; // Finaliza carga
       }

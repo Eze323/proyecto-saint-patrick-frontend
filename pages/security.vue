@@ -32,12 +32,15 @@
         </Tab>
       </TabList>
 
-      <TabPanels>
-        <!-- Tab: Datos personales -->
+      <TabPanels class="transition-opacity duration-300">
         <TabPanel class="fade-in max-w-2xl mx-auto">
           <div class="flex items-center gap-4 mb-4">
-            <img src="@/assets/images/profile-form.png" alt="Foto de perfil" class="w-10 h-10 sm:w-12 sm:h-12 object-cover" />
-            <button class="text-[#00595c] font-semibold text-sm sm:text-base hover:underline">Cambiar foto</button>
+            <img 
+              src="@/assets/images/profile-form.webp" 
+              alt="Foto de perfil" 
+              class="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-full bg-primary-450 p-1" 
+            />
+            <button disabled class="text-[#00595c] font-semibold text-sm sm:text-base opacity-50 cursor-not-allowed">Cambiar foto</button>
           </div>
 
           <form @submit.prevent="saveChanges">
@@ -47,7 +50,7 @@
                 <input
                   v-model="formData.name"
                   type="text"
-                  class="w-full p-2 sm:p-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:border-[#00595c]"
+                  class="w-full p-2 sm:p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#00595c]"
                   placeholder="Ej: Juan"
                 />
               </div>
@@ -56,7 +59,7 @@
                 <input
                   v-model="formData.lastname"
                   type="text"
-                  class="w-full p-2 sm:p-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:border-[#00595c]"
+                  class="w-full p-2 sm:p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#00595c]"
                   placeholder="Ej: Pérez"
                 />
               </div>
@@ -65,7 +68,7 @@
                 <input
                   v-model="formData.email"
                   type="email"
-                  class="w-full p-2 sm:p-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:border-[#00595c]"
+                  class="w-full p-2 sm:p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#00595c]"
                   placeholder="Ej: juan.perez@email.com"
                 />
               </div>
@@ -74,7 +77,7 @@
                 <input
                   v-model="formData.phone"
                   type="text"
-                  class="w-full p-2 sm:p-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:border-[#00595c]"
+                  class="w-full p-2 sm:p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#00595c]"
                   placeholder="Ej: +54 11 2345-6789"
                 />
               </div>
@@ -83,7 +86,7 @@
                 <input
                   v-model="formData.address"
                   type="text"
-                  class="w-full p-2 sm:p-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:border-[#00595c]"
+                  class="w-full p-2 sm:p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#00595c]"
                   placeholder="Ej: Av. Siempre Viva 742"
                 />
               </div>
@@ -92,7 +95,7 @@
                 <input
                   v-model="formData.zip"
                   type="text"
-                  class="w-full p-2 sm:p-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:border-[#00595c]"
+                  class="w-full p-2 sm:p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#00595c]"
                   placeholder="Ej: 1234"
                 />
               </div>
@@ -101,7 +104,7 @@
                 <input
                   v-model="formData.locality"
                   type="text"
-                  class="w-full p-2 sm:p-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:border-[#00595c]"
+                  class="w-full p-2 sm:p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#00595c]"
                   placeholder="Ej: Buenos Aires"
                 />
               </div>
@@ -110,7 +113,7 @@
                 <input
                   v-model="formData.province"
                   type="text"
-                  class="w-full p-2 sm:p-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:border-[#00595c]"
+                  class="w-full p-2 sm:p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#00595c]"
                   placeholder="Ej: Buenos Aires"
                 />
               </div>
@@ -119,7 +122,7 @@
                 <input
                   v-model="formData.country"
                   type="text"
-                  class="w-full p-2 sm:p-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:border-[#00595c]"
+                  class="w-full p-2 sm:p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:border-[#00595c]"
                   placeholder="Ej: Argentina"
                 />
               </div>
@@ -159,6 +162,10 @@
 </template>
 
 <script setup>
+import { useNotifications } from '../composables/useNotifications';
+
+const { addNotification } = useNotifications();
+
 import { useAuthStore } from '~/stores/auth.store';
 import { ref, computed, onMounted, nextTick } from 'vue';
 import {
@@ -235,6 +242,10 @@ const tabs = [
 
 // Guardar cambios
 const saveChanges = async () => {
+  if (!formData.value.email || !/\S+@\S+\.\S+/.test(formData.value.email)) {
+    addNotification('Por favor, ingresa un email válido', 'error');
+    return;
+  }
   try {
     isSaving.value = true;
     
@@ -253,13 +264,13 @@ const saveChanges = async () => {
       await nextTick();
       
       // Mostrar feedback al usuario
-      alert('Datos guardados exitosamente!');
+      addNotification('Datos guardados exitosamente', 'success');
     } else {
-      alert('No hay cambios para guardar');
+      addNotification('No hay cambios para guardar', 'info');
     }
   } catch (error) {
     console.error('Error al guardar los datos:', error);
-    alert(`Error al guardar los datos: ${error.message}`);
+    addNotification(`Error al guardar: ${error.message}`, 'error');
   } finally {
     isSaving.value = false;
   }

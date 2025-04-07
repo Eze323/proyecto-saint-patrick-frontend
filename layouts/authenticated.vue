@@ -146,7 +146,7 @@ const links = [
 watch(
   () => authStore.error,
   (newError) => {
-    console.log('Error detectado:', newError); // Debug
+  //  console.log('Error detectado:', newError); // Debug
     if (newError) {
       addNotification(newError, 'error');
     }
