@@ -140,21 +140,18 @@
         <TabPanel class="fade-in max-w-2xl mx-auto">
           <h3 class="text-lg sm:text-xl font-semibold text-gray-700 mb-4">Clave y Biometría</h3>
           <p class="text-gray-600 text-sm sm:text-base">Aquí podrás gestionar tu contraseña y opciones de biometría (como huella dactilar o reconocimiento facial).</p>
-          <!-- Agregar formulario o contenido para Clave y Biometría -->
         </TabPanel>
 
         <!-- Tab: Dispositivos conectados -->
         <TabPanel class="fade-in max-w-2xl mx-auto">
           <h3 class="text-lg sm:text-xl font-semibold text-gray-700 mb-4">Dispositivos conectados</h3>
           <p class="text-gray-600 text-sm sm:text-base">Aquí podrás ver y gestionar los dispositivos que tienen acceso a tu cuenta.</p>
-          <!-- Agregar lista de dispositivos o contenido para Dispositivos conectados -->
         </TabPanel>
 
         <!-- Tab: Actividades sospechosas -->
         <TabPanel class="fade-in max-w-2xl mx-auto">
           <h3 class="text-lg sm:text-xl font-semibold text-gray-700 mb-4">Actividades sospechosas</h3>
           <p class="text-gray-600 text-sm sm:text-base">Aquí podrás revisar actividades sospechosas detectadas en tu cuenta.</p>
-          <!-- Agregar lista de actividades o contenido para Actividades sospechosas -->
         </TabPanel>
       </TabPanels>
     </TabGroup>
@@ -163,7 +160,7 @@
 
 <script setup>
 import { useAuthStore } from '~/stores/auth.store';
-import { ref, computed, watch, onMounted } from 'vue';
+import { ref, computed, onMounted, nextTick } from 'vue';
 import {
   LockClosedIcon,
   DevicePhoneMobileIcon,
@@ -175,9 +172,9 @@ import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue';
 definePageMeta({ layout: 'authenticated' });
 
 const authStore = useAuthStore();
-const user = computed(() => authStore.user.profile);
+const isSaving = ref(false);
 
-// Estado para el formulario
+// Inicializar formData con todos los campos necesarios
 const formData = ref({
   name: '',
   lastname: '',
@@ -190,44 +187,43 @@ const formData = ref({
   country: '',
 });
 
-// Estado para manejar el guardado
-const isSaving = ref(false);
+// Computed para obtener el perfil actualizado reactivamente
+const currentProfile = computed(() => ({
+  name: authStore.user?.profile?.name || '',
+  lastname: authStore.user?.profile?.lastname || '',
+  email: authStore.user?.profile?.email || '',
+  phone: authStore.user?.profile?.phone || '',
+  address: authStore.user?.profile?.address || '',
+  zip: authStore.user?.profile?.zip || '',
+  locality: authStore.user?.profile?.locality || '',
+  province: authStore.user?.profile?.province || '',
+  country: authStore.user?.profile?.country || '',
+}));
 
-// Cargar el usuario al montar el componente
-onMounted(async () => {
+// Cargar datos iniciales
+const loadInitialData = async () => {
   if (authStore.token && !authStore.user) {
     await authStore.fetchUser();
   }
-});
+  updateFormData();
+};
 
-// Sincronizar formData con user cuando cambie
-watch(user, (newUser) => {
-  if (newUser) {
-    formData.value = {
-      name: newUser.name || '',
-      lastname: newUser.lastname || '',
-      email: newUser.email || '',
-      phone: newUser.phone || '',
-      address: newUser.address || '',
-      zip: newUser.zip || '',
-      locality: newUser.locality || '',
-      province: newUser.province || '',
-      country: newUser.country || '',
-    };
-  } else {
-    formData.value = {
-      name: '',
-      lastname: '',
-      email: '',
-      phone: '',
-      address: '',
-      zip: '',
-      locality: '',
-      province: '',
-      country: '',
-    };
+// Actualizar formData cuando cambie el perfil
+const updateFormData = () => {
+  formData.value = { ...currentProfile.value };
+};
+
+// Observar cambios en el perfil del usuario
+watch(() => authStore.user?.profile, (newProfile) => {
+  if (newProfile) {
+    updateFormData();
   }
-}, { immediate: true });
+}, { deep: true, immediate: true });
+
+// Cargar datos al montar el componente
+onMounted(async () => {
+  await loadInitialData();
+});
 
 // Definición de los tabs
 const tabs = [
@@ -237,17 +233,33 @@ const tabs = [
   { value: 'actividades-sospechosas', name: 'Actividades sospechosas', icon: ExclamationCircleIcon },
 ];
 
+// Guardar cambios
 const saveChanges = async () => {
   try {
     isSaving.value = true;
-    // Llamar a updateProfile desde el authStore con los datos del formulario
-    await authStore.updateProfile(formData.value);
-    // Mostrar mensaje de éxito
-    alert('Datos guardados exitosamente!');
+    
+    // Filtrar solo los campos modificados
+    const modifiedData = Object.keys(formData.value).reduce((acc, key) => {
+      if (formData.value[key] !== currentProfile.value[key]) {
+        acc[key] = formData.value[key];
+      }
+      return acc;
+    }, {});
+
+    if (Object.keys(modifiedData).length > 0) {
+      await authStore.updateProfile(modifiedData);
+      
+      // Esperar a que se complete la actualización del store
+      await nextTick();
+      
+      // Mostrar feedback al usuario
+      alert('Datos guardados exitosamente!');
+    } else {
+      alert('No hay cambios para guardar');
+    }
   } catch (error) {
-    // Manejar errores
     console.error('Error al guardar los datos:', error);
-    alert('Error al guardar los datos. Por favor, intenta de nuevo.');
+    alert(`Error al guardar los datos: ${error.message}`);
   } finally {
     isSaving.value = false;
   }
@@ -255,7 +267,6 @@ const saveChanges = async () => {
 </script>
 
 <style scoped>
-/* Transición para los tabs */
 .fade-in {
   animation: fadeIn 0.3s ease-in-out;
 }

@@ -37,11 +37,14 @@
   </template>
   
   <script setup lang="ts">
+  
   definePageMeta({ layout: "authenticated" });
   
   // Función para limpiar el campo de búsqueda (puede expandirse si querés agregar funcionalidad)
   const clearSearch = () => {
     // Aquí podrías agregar lógica para limpiar el input
     console.log('Limpiar búsqueda');
+    const { addNotification } = useNotifications();
+    addNotification('Prueba manual', 'success');
   };
   </script>

@@ -73,13 +73,19 @@
           >
             <component :is="isMenuOpen ? XMarkIcon : ChevronDoubleDownIcon" class="w-6 h-6" />
           </button>
+     
         </header>
-
+        
+        
         <main class="flex-1 p-6 overflow-y-auto">
           <slot />
         </main>
       </div>
     </div>
+
+    <!-- Componente de notificaciones -->
+    <Toast />
+
   </div>
 
   <!-- Redirigir si no está autenticado -->
@@ -102,6 +108,11 @@ import {
   ChevronDoubleDownIcon,
   XMarkIcon,
 } from "@heroicons/vue/24/solid";
+import Toast from "../components/Toast.vue";
+
+import { useNotifications } from "../composables/useNotifications"; 
+ // Ajusta la ruta según tu estructura
+const { addNotification } = useNotifications();
 
 import { useAuthStore } from '~/stores/auth.store';
 
@@ -128,6 +139,21 @@ const links = [
   { to: "/investments", label: "Inversiones", icon: ChartBarIcon },
   { to: "/support", label: "Soporte", icon: LifebuoyIcon },
 ];
+
+
+
+// Escuchar errores del authStore
+watch(
+  () => authStore.error,
+  (newError) => {
+    console.log('Error detectado:', newError); // Debug
+    if (newError) {
+      addNotification(newError, 'error');
+    }
+  },
+  { immediate: true } // Ejecuta el watcher al montar el componente
+);
+
 </script>
 
 <style scoped>

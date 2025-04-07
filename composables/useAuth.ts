@@ -1,81 +1,86 @@
 import { useAuthStore } from '@/stores/auth.store';
+import { useNotifications } from '../composables/useNotifications';
 import type { Credentials, LoginResponse } from '~/utils/types';
-
 
 export const useAuth = () => {
   const authStore = useAuthStore();
   const config = useRuntimeConfig();
-  /**
-   * Inicia sesión con las credenciales proporcionadas.
-   * @param credentials - Objeto con el número de tarjeta y el PIN.
-   */
-  const login = async (credentials: Credentials) => {
-    try {
-      // Realiza la solicitud al endpoint de login
-      const response = await $fetch<LoginResponse>(
-        // config.public.apiUrl
-        config.public.apiBaseUrl+'/api/login', {
-        method: 'POST',
-        body: credentials,
-      });
+  const { addNotification } = useNotifications();
 
-      // Almacena el token y los datos del usuario en el store
+  const login = async (credentials: Credentials, redirectTo: string = '/dashboard') => {
+    authStore.isLoading = true;
+    authStore.error = null;
+
+    try {
+      const response = await $fetch<LoginResponse>(
+        `${config.public.apiBaseUrl}/api/login`,
+        {
+          method: 'POST',
+          body: credentials,
+        }
+      );
       authStore.setToken(response.token);
       authStore.setUser(response.user);
-
-      // Redirige al dashboard después del login exitoso
-      navigateTo('/dashboard');
+      if (import.meta.client) {
+        navigateTo(redirectTo);
+      }
+      addNotification('Inicio de sesión exitoso', 'success');
       return true;
-    } catch (error) {
-      console.error('Error durante el inicio de sesión:', error);
-
-      // Muestra un mensaje de error al usuario (puedes usar un toast o un alert)
-      alert('Credenciales inválidas. Por favor, inténtalo de nuevo.');
+    } catch (error: any) {
+      const errorMsg = error.data?.message || error.message || 'Credenciales inválidas';
+      authStore.error = errorMsg;
+      addNotification(errorMsg, 'error');
+      throw error;
+    } finally {
+      authStore.isLoading = false;
     }
   };
 
-  const register = async (credentials: Credentials) => {
-    const config = useRuntimeConfig();
-    // Lógica de registro
+  const register = async (credentials: Credentials, redirectTo: string = '/auth/login') => {
+    authStore.isLoading = true;
+    authStore.error = null;
+
     try {
-      // Simula una llamada a la API
-      const response = await fetch(
-        // config.public.apiBaseUrl+
-        config.public.apiBaseUrl+'/api/register', {
-        method: 'POST',
-        body: JSON.stringify(credentials),
-      });
-
-      if (!response.ok) {
-        throw new Error('Error durante el registro');
+      const response = await $fetch<LoginResponse>(
+        `${config.public.apiBaseUrl}/api/register`,
+        {
+          method: 'POST',
+          body: credentials,
+        }
+      );
+      if (response.token && response.user) {
+        authStore.setToken(response.token);
+        authStore.setUser(response.user);
       }
-
-      return true; // Registro exitoso
-    } catch (error) {
+      if (import.meta.client) {
+        navigateTo(redirectTo);
+      }
+      addNotification('Registro exitoso', 'success'); // Añadido
+      return true;
+    } catch (error: any) {
+      const errorMsg = error.message || 'Error durante el registro';
+      authStore.error = errorMsg;
       console.error('Error en el registro:', error);
       throw error;
+    } finally {
+      authStore.isLoading = false;
     }
   };
-  
-  /**
-   * Cierra la sesión del usuario.
-   */
-  const logout = () => {
-    // Limpia el token y los datos del usuario en el store
-    authStore.clearToken();
-  
-    // Limpia el localStorage
-    localStorage.removeItem('auth-token');
-    localStorage.removeItem('auth-user');
-    // Limpia el sessionStorage
 
-    // Redirige al usuario a la página de login
-    navigateTo('/auth/login');
+  const logout = (redirectTo: string = '/auth/login') => {
+    authStore.logout();
+    if (import.meta.client) {
+      navigateTo(redirectTo);
+    }
+    addNotification('Sesión cerrada', 'info');
   };
 
   return {
     login,
     register,
     logout,
+    isAuthenticated: authStore.isAuthenticated,
+    isLoading: computed(() => authStore.isLoading),
+    error: computed(() => authStore.error),
   };
 };

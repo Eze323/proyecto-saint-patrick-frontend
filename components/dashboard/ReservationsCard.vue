@@ -69,7 +69,7 @@ const percentage = computed(() => {
 });
 
 // Verificación de datos para depuración (puedes eliminar esto después)
-console.log('Progress:', progress.value, 'Percentage:', percentage.value);
+//console.log('Progress:', progress.value, 'Percentage:', percentage.value);
 </script>
 
 <style scoped>

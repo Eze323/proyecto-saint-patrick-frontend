@@ -9,7 +9,7 @@
         id="fullName"
         type="text"
         v-model="fullName"
-        placeholder="Juan Roman Riquelme"
+        placeholder="Juan Jose Ejemplar"
         :disabled="loading"
         class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
       />
