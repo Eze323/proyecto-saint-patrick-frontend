@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { useAuthStore } from './auth.store';
-import type { Account, TransferResponse, ValidationResponse } from '~/utils/types';
+import type { Account, TransferResponse, ValidationResponse } from '../utils/types';
+import { useRuntimeConfig } from 'nuxt/app';
 
 const config = useRuntimeConfig();
 
@@ -21,6 +22,7 @@ export const useTransfersStore = defineStore('transfers', {
     errorMessage: '',
     successMessage: '',
     isSubmitting: false,
+    
   }),
 
   actions: {

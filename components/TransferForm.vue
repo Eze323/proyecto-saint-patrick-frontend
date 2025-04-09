@@ -7,6 +7,7 @@
     <div v-if="transfersStore.errorMessage" class="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
       {{ transfersStore.errorMessage }}
     </div>
+    
 
     <form @submit.prevent="transfersStore.submitTransfer">
       <div class="mb-4">
